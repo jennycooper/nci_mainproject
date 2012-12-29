@@ -1,0 +1,79 @@
+@(stats: YearlyStats, year: String)
+
+@import helper._
+
+
+<!--calling the template main, and passing in a String parameter, which is then used inside the main.html page-->
+@main("Euaiki Island Reservations") {
+    
+    <div class="container">
+	    <div class="header">
+		    <h1>Statistics for @year</h1>
+		    	<li class="cal_buttons">
+		        	<a href="@routes.Application.index("")">Home</a>
+		    	</li>
+		    	<li class="cal_buttons">
+		        	<a href="#">Logout</a>
+		    	</li>
+		
+		  	@defining(Array("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+														"Jul", "Aug", "Sep", "Oct", "Nov", "Dec")) {months =>
+		    <table class="table2">
+			    <thead>
+			  		<tr>
+			  			<th></th>
+			  			<th>Number of Reservations</th>
+			  			<th>Total Number of Nights</th>
+			  			<th>Total for Accommodation</th>
+			  			<th>Total for Meals</th>
+			  			<th>Total for Whale Watching</th>
+			  			<th>Total for Transfers</th>
+			  			<th>Total</th>
+			  		</tr>
+			  	</thead>
+			  	<tbody>
+			  	
+			  		
+					
+						@for(x <- 0 until months.size){
+			  			<tr>
+			  				
+			  				<th>@months(x) @year</th>
+			  				@if(x%2==0){
+				  					<td class="even">@stats.getMStats.get(x).getNumRes()</td>
+					  				<td class="even">@stats.getMStats.get(x).getNumRooms()</td>
+					  				<td class="even">@stats.getMStats.get(x).getTotAccomm()</td>
+					  				<td class="even">@stats.getMStats.get(x).getTotMeals()</td>
+					  				<td class="even">@stats.getMStats.get(x).getTotWhale()</td>
+					  				<td class="even">@stats.getMStats.get(x).getTotTransfers()</td>
+					  				<td class="even">@stats.getMStats.get(x).getTotal()</td>
+	
+			  					}	else{
+			  						<td class="odd">@stats.getMStats.get(x).getNumRes()</td>
+					  				<td class="odd">@stats.getMStats.get(x).getNumRooms()</td>
+					  				<td class="odd">@stats.getMStats.get(x).getTotAccomm()</td>
+					  				<td class="odd">@stats.getMStats.get(x).getTotMeals()</td>
+					  				<td class="odd">@stats.getMStats.get(x).getTotWhale()</td>
+					  				<td class="odd">@stats.getMStats.get(x).getTotTransfers()</td>
+					  				<td class="odd">@stats.getMStats.get(x).getTotal()</td>
+			  				}
+			  			</tr>	
+			  		}
+			  		<tr>
+			  			<th>Year Total</th>
+			  			<td>@stats.getNumRes()</td>
+			  			<td>@stats.getNumRooms()</td>
+			  			<td>@stats.getTotAccomm()</td>
+			  			<td>@stats.getTotMeals()</td>
+			  			<td>@stats.getTotWhale()</td>
+			  			<td>@stats.getTotTransfers()</td>
+			  			<td>@stats.getTotal()</td>
+			  		</tr>
+			  		
+			  	</tbody>			
+			</table>
+			}
+		</div>
+	</div>
+  		
+}

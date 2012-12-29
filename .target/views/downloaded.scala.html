@@ -1,0 +1,28 @@
+@(year: String)
+
+@import helper._
+
+
+
+<!--calling the template main, and passing in a String parameter, which is then used inside the main.html page-->
+@main("Euaiki Island Reservations") {
+    
+<div class="small_container">   
+	<div class="relative">	
+	<img class="centered" src="@routes.Assets.at("images/euaiki_dock.jpg")"/>
+		<div class="downloaded">
+			<p>Copy of calendar for year @year </p>  
+			<p>has been downloaded to folder:<p>
+			<p>C:/euaiki_island_reservations<p>
+			<li class="return_button">
+		        	<a href="@routes.Application.index("")" >Return Home</a>
+		    </li>
+		    <li class="return_button">
+		        	<a href="@routes.Application.index("")" >Logout</a>
+		    </li>   
+		    <img class="icon" width="55px" src="@routes.Assets.at("images/flowers.png")"/>
+		</div>   
+    </div>
+</div>
+    
+}

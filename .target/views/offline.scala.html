@@ -1,0 +1,203 @@
+@(yearArray: List[Array[Array[RoomBooking]]], myYear:String)
+
+@import helper._
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Euaiki Island Reservations</title>
+		<!--The styling is written in the header instead of an external css file, so setttings will be downloaded with the file-->
+		<style type="text/css">	
+			.container {
+				margin-left:auto;
+				margin-right:auto;
+				width: 90%;
+				max-width:1040px;
+				min-width:950px;
+				background-color: white;
+				padding:10px;
+			}	
+
+			.header {
+				background-color: lightgrey;
+				margin-bottom: 10px;
+				padding:10px;
+			}
+			
+			.header h1 {
+			    text-align: center;
+			    font-size: 30px;
+			    font-weight: bold; 
+			    color: black;
+			    margin-bottom: 20px;
+			}
+			
+			.buttons {
+				width: 150px;
+				height: 40px;
+				background-color: black;
+				margin-left: 300px;
+				display:inline;
+			}
+			
+			.buttons a {
+				text-decoration: none;
+			}
+			
+			.cal_table {
+				width:100%;
+			}
+			
+			table.table1{
+				table-layout: fixed;
+			    font-family: "Trebuchet MS", sans-serif;
+			    font-size: 16px;
+			    font-weight: bold;
+			    line-height: 1.4em;
+			    font-style: normal;
+			    border-collapse:separate;
+			}
+			
+			.table1 thead th, .table1 tfoot td{
+			    padding:15px;
+			    color:#fff;
+			    text-shadow:1px 1px 1px #568F23;
+			    border:1px solid #93CE37;
+			    border-bottom:3px solid #9ED929;
+			    background-color:#9DD929;
+			    background:-webkit-gradient(
+			        linear,
+			        left bottom,
+			        left top,
+			        color-stop(0.02, rgb(123,192,67)),
+			        color-stop(0.51, rgb(139,198,66)),
+			        color-stop(0.87, rgb(158,217,41))
+			        );
+			    background: -moz-linear-gradient(
+			        center bottom,
+			        rgb(123,192,67) 2%,
+			        rgb(139,198,66) 51%,
+			        rgb(158,217,41) 87%
+			        );
+			    -webkit-border-top-left-radius:5px;
+			    -webkit-border-top-right-radius:5px;
+			    -moz-border-radius:5px 5px 0px 0px;
+			    border-top-left-radius:5px;
+			    border-top-right-radius:5px;
+			}
+			
+			.table1 thead th:empty{
+				background-color: white;
+				background: white;
+				border: 0px;
+			}
+			
+			.table1 tbody th{
+			    padding:15px;
+			    color:#fff;
+			    text-shadow:1px 1px 1px #568F23;
+			    border:1px solid #93CE37;
+			    border-bottom:3px solid #9ED929;
+			    background-color:#9DD929;
+			    background:-webkit-gradient(
+			        linear,
+			        left bottom,
+			        left top,
+			        color-stop(0.02, rgb(123,192,67)),
+			        color-stop(0.51, rgb(139,198,66)),
+			        color-stop(0.87, rgb(158,217,41))
+			        );
+			    background: -moz-linear-gradient(
+			        center bottom,
+			        rgb(123,192,67) 2%,
+			        rgb(139,198,66) 51%,
+			        rgb(158,217,41) 87%
+			        );
+			}
+			
+			.table1 tbody td{
+			    padding:3px;
+			    text-align:center;
+			    background-color:#DEF3CA;
+			    border: 1px solid #E7EFE0;
+			    -moz-border-radius:2px;
+			    -webkit-border-radius:2px;
+			    border-radius:2px;
+			    color:#666;
+			    text-shadow:1px 1px 1px #fff;
+			    width: 11.5%;
+			}
+			
+			.table1 .booked {
+				background-color: #e3aa46;
+			}
+			
+			.table1 .paid {
+				background-color: #9abb8c;
+			}
+			
+		</style>
+    </head>
+    
+    <body>
+		<div class="container">
+		    <div class="header">
+		    	<h1>Euaiki Island Reservation Calendar</h1>	
+		    	<h1>@myYear</h1>
+		    	<li class="buttons">
+		        	<a href="@routes.Application.downloadCopy(myYear)">Download Calendar</a>
+		    	</li>
+		    	<li class="buttons">
+		        	<a href="@routes.Application.index("")" class="btn">Cancel</a> 
+		    	</li>
+			</div>
+			
+			@defining(Array("January", "February", "March", "April", "May", "June",
+												"July", "August", "September", "October", "November", "December")) {months =>
+			
+				@for(x <- 0 until months.size){
+			    <div class="cal_table">
+				  	<table class="table1">
+					  	<thead>
+					  		<tr>
+					  			<th></th>
+					  			@for(i <- 0 to ((yearArray.get(x))(0).length-1)) {
+					  				<th>Room @(i+1)</th>
+					  			}
+					  		</tr>
+					  	</thead>
+	
+					  	<tbody>
+						@for(i <- 0 to (yearArray.get(x).length-1)) {
+							<tr>
+								<th>@months(x).substring(0,3) @(i+1)</th>
+								@for(j <- 0 to ((yearArray.get(x))(0).length-1)) {
+									
+									@if((yearArray.get(x))(i)(j) == null){
+									<td>
+										<em>--</em>
+									</td>
+									}	else{
+											@if((yearArray.get(x))(i)(j).getDeposit()==0){
+												<td class="booked">
+													@{(yearArray.get(x))(i)(j).getGuestName()}
+												</td>
+											} 	else{
+												<td class="paid">
+							            			@{(yearArray.get(x))(i)(j).getGuestName()}
+							            		</td>
+							            		}
+						            	}
+						            
+						         }
+					         </tr>
+					      }
+					    </tbody>
+				    </table>
+			    </div>
+			 	}
+			}
+		</div>
+    </body>
+</html>

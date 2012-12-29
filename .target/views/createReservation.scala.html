@@ -1,0 +1,104 @@
+@(reservationForm: Form[Reserve], numRooms: Int)
+
+@import helper._
+
+
+<!--calling the template main, and passing in a String parameter, which is then used inside the main.html page-->
+@main("Euaiki Island Reservations") {
+    
+    <div class="container">
+    	<div class="formheader">
+	    	<ul>
+	    		<li class="form_buttons">
+		        	<a href="@routes.Authenticate.logout()">Logout</a>
+		    	</li>
+		    	<li class="form_buttons">
+		        	<a href="@routes.Application.index("")" >Return To Calendar</a>
+		    	</li>
+		    </ul>
+    		<h2>Create Reservation Details</h2>
+    	</div>
+
+		<div class = "rooms">
+			<h3>No. of Rooms: </h3>
+		 	@form(routes.Application.addRooms("")){
+		    	<select name="rooms">
+		       		<option value="1">1</option>
+		       		<option value="2">2</option>
+		       		<option value="3">3</option>
+		       		<option value="4">4</option>
+		       	</select>
+		    	<input type="submit" value="Change no. Rooms" ></input>
+		    }
+		</div>
+
+		    @form(routes.Application.save(), 'class -> "view") {
+		    	<div class="edit">
+			        <fieldset class="guest">
+			        	<legend>Guest Details</legend>
+				        <ol>
+				    		<li class="inlineinput">
+					 			@inputText(reservationForm("myGuest.name"), '_label -> "Guest Name:")
+				        	</li>
+					        <li class="inlineinput">@inputText(reservationForm("myGuest.email"), '_label -> "Guest email:")</li>
+					        <li class="inlineinput">@inputText(reservationForm("myGuest.country"), '_label -> "Guest country:")</li>
+					    </ol>
+				    </fieldset>
+				    <fieldset class="box">
+				    	<legend>Reservation Details</legend>
+				    	<ol>
+				    		<li>@inputText(reservationForm("checkin"), '_label -> "Check-In Date:")</li>
+				        	<li>@inputText(reservationForm("checkout"), '_label -> "Check-Out Date:")</li>
+					        <li>@inputText(reservationForm("numAdults"), '_label -> "No. of Adults:", '_default -> "0.0")</li>
+					        <li>@inputText(reservationForm("numChild"), '_label -> "No. of Children:", '_default -> "0.0")</li>
+					        @for(i <- 0 to numRooms-1) {
+						            <li>@inputText(reservationForm("detailList["+i+"].roomNum"), '_label -> "Room Number:")	</li>	
+						        }
+						</ol>
+					</fieldset>
+					<fieldset class="box">
+						<legend>Rates</legend>
+						<ol>
+					        <li>@inputText(reservationForm("roomRate"), '_label -> "Room Rate:")</li>
+					        <li>@inputText(reservationForm("mealAdult"), '_label -> "Adult Meal Rate:")</li>
+					        <li>@inputText(reservationForm("mealChild"), '_label -> "Child Meal Rate:")</li>
+					        <li>@inputText(reservationForm("whaleRate"), '_label -> "Whale Watching :")</li>
+					        <li>@inputText(reservationForm("transfer"), '_label -> "Transfer Rate:")</li>
+					        <li>@inputText(reservationForm("costs.depositPaid"), '_label -> "Deposit Paid:")</li>
+			        	</ol>
+			        </fieldset>
+			        <fieldset class="transfer" >
+				  		<legend>Transfer Details</legend>
+				  		<ol>
+				  			<li class="transferinput">
+				  				@inputText(reservationForm("pickupTime"), '_label -> "Pick-up Time:")
+				  				@input(reservationForm("pickup"), '_label -> "Pick-up Location:") { (id, name, value, _) =>
+			        				<input type="text" name="" value="@value" style="width:150px"> 
+			        			}
+				  			</li>
+				  			<li class="transferinput">
+				  				@inputText(reservationForm("dropoffTime"), '_label -> "Drop-off Time:")
+				  				@input(reservationForm("dropoff"), '_label -> "Drop-off Location:") { (id, name, value, _) =>
+			        				<input type="text" name="" value="@value" style="width:150px" readonly="readonly"> 
+			        			}
+				  			</li>
+				  		</ol>
+				  	</fieldset>	
+				  	<fieldset class="transfer" >
+				  		<legend>Other Information</legend>
+				  		<ol>
+				  			<li class="transferinput">
+			        			@textarea(reservationForm("notes"), args = 'rows -> 3, 'cols -> 30)
+				  			</li>
+				  		</ol>
+				  	</fieldset>		
+		        </div>
+		        
+		       <input type="submit" value="Create Reservation"> 	            
+        	}
+        	 <a href="@routes.Application.index("")" class="cal_buttons">Cancel</a>	
+
+     </div>   
+    
+    
+}

@@ -1,0 +1,245 @@
+@(id: Long, reservationForm: Form[Reserve], l:Int)
+
+@import helper._
+
+@convertDate()=@{
+	var date:String = reservationForm("checkin").value();
+
+	routes.Application.returnToIndex(date)
+}
+
+@main("Euaiki Island Reservations") {
+    <div class="container">
+	    <div class="formheader">
+	    	<ul>
+	    		<li class="form_buttons">
+		        	<a href="@routes.Authenticate.logout()">Logout</a>
+		    	</li>
+		    	<li class="form_buttons">
+		        	<a href="@convertDate()" >Return To Calendar</a>
+		    	</li>
+		    </ul>
+    		<h2>Reservation Details</h2>
+    	</div>
+	    
+	    @if(flash.containsKey("success")) {
+        <div class="alertMsg">
+            <strong>Done!</strong> @flash.get("success")
+        </div>
+    	} 
+	    <!--Display the form with the details filled in-->
+	     @form(routes.Application.getReservation(id), 'class -> "view") {
+
+		 	<fieldset class="guest">
+		 		<legend>Guest Details</legend>
+			 	<ol >
+			 		<li class = "hidden">
+			 		@input(reservationForm("reservationID")) { (id, name, value, _) =>
+		        		<input type="hidden" name="" value="@value"> 
+		        	}
+		        	</li>
+			 		<li class="inlineinput">
+			 		@inputText(reservationForm("myGuest.name"), '_label -> "Guest Name:")
+		        	</li>
+		        	<li class="inlineinput">
+					@input(reservationForm("myGuest.email"), '_label -> "Guest Email:") { (id, name, value, _) =>
+		        		<input type="text" name="@name" value="@value" style="width:120px" readonly="readonly" > 
+		        	}
+		        	</li>
+		        	<li class="inlineinput">
+		        	@input(reservationForm("myGuest.country"), '_label -> "Guest Country:") { (id, name, value, _) =>
+		        		<input type="text" name="@name" value="@value" readonly="readonly" > 
+		        	}
+		        	</li>
+		        </ol>
+		    </fieldset>
+		    <fieldset class="box">
+		    	<legend>Reservation Details</legend>
+		    	<ol>
+		    		<li>
+		    		@input(reservationForm("checkin"), '_label -> "Check In Date:") { (id, name, value, _) =>
+		        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+		        	}
+		        	</li>
+		        	<li>
+		        	@input(reservationForm("checkout"), '_label -> "Check Out Date:") { (id, name, value, _) =>
+		        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+		        	}
+		        	</li>
+		        	<li>
+		   				@input(reservationForm("len"), '_label -> "No. of Nights:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+		        	</li>
+		        	<li>
+		        	@input(reservationForm("numAdults"), '_label -> "No. of Adults:") { (id, name, value, _) =>
+		        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+		        	}
+		        	</li>
+		        	<li>
+		        	@input(reservationForm("numChild"), '_label -> "No. of Children:") { (id, name, value, _) =>
+		        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+		        	}
+		        	</li>
+		        	<li>
+		        	@input(reservationForm("numRooms"), '_label -> "No of Rooms:") { (id, name, value, _) =>
+		        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+		        	}
+		        	</li>   	
+				
+			        @for(i <- 0 to reservationForm.get().getDetailList().size()-1) {
+			        <li>
+			        	@input(reservationForm("detailList["+i+"].roomNum"), '_label -> "Room Number:") { (id, name, value, _) =>
+		        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+		        		}
+		        	</li>	
+		        	}
+			     </ol>
+			</fieldset>
+		    <fieldset class="box">
+		    	<legend>Rates</legend>
+			    <ol>  
+					<li>
+						@input(reservationForm("roomRate"), '_label -> "Room Rate:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+			        <li>
+			        	@input(reservationForm("mealAdult"), '_label -> "Adult Meal Rate:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+			        <li>
+			        	@input(reservationForm("mealChild"), '_label -> "Child Meal Rate:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+			        <li>
+			        	@input(reservationForm("transfer"), '_label -> "Transfers Rate:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+			        <li>
+			        	@input(reservationForm("whaleTotal"), '_label -> "Whale Watching:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+			   </ol>
+		   </fieldset>
+		   
+		   <fieldset class="box"> 
+		   		<legend>Cost Details</legend>
+		   		<ol>
+		        	<li class="wideinput">
+				        @input(reservationForm("costs.totAccom"), '_label -> "Total Cost of Accom:") { (id, name, value, _) =>
+			        		<input  type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+			        <li class="wideinput">
+				        @input(reservationForm("costs.totAdMeals"), '_label -> "Total Cost of Adult Meals:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+			        <li class="wideinput">
+				      	@input(reservationForm("costs.totChMeals"), '_label -> "Total Cost of Child Meals:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+			        <li class="wideinput">
+				        @input(reservationForm("transfer"), '_label -> "Transfers Rate:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+			        <li class="wideinput">
+			        	@input(reservationForm("whaleRate"), '_label -> "Whale Watching Total:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+			        <li class="wideinput">
+				      	@input(reservationForm("costs.total"), '_label -> "Total for Reservation:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+			        <li class="wideinput">
+				 		@input(reservationForm("costs.depositDue"), '_label -> "Deposit Due:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+			        <li class="wideinput">
+			        	@input(reservationForm("costs.balance"), '_label -> "Balance Remaining:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
+			        	}
+			        </li>
+		  	</fieldset>
+		  	<fieldset class="transfer" >
+		  		<legend>Transfer Details</legend>
+		  		<ol>
+		  			<li class="transferinput">
+				 		@input(reservationForm("pickupTime"), '_label -> "Pick-up Time:") { (id, name, value, _) =>
+			        		<input type="text" name="" value="@value" readonly="readonly"> 
+			        	}
+			        	@input(reservationForm("pickup"), '_label -> "Pick-up Location:") { (id, name, value, _) =>
+			        		<input type="text" name="" value="@value" style="width:150px" readonly="readonly"> 
+			        	}
+		        	</li>
+					<li class="transferinput">
+				 		@input(reservationForm("dropoffTime"), '_label -> "Drop-off Time:") { (id, name, value, _) =>
+			        		<input type="text" name="" value="@value" readonly="readonly"> 
+			        	}
+			        	@input(reservationForm("dropoff"), '_label -> "Drop-off Location:") { (id, name, value, _) =>
+			        		<input type="text" name="" value="@value" style="width:150px" readonly="readonly"> 
+			        	}
+		        	</li>
+		  		</ol>
+		  	</fieldset>
+		  	
+		  	<fieldset class="guest">
+				<legend>Deposit Details</legend>
+		  		<ol>
+		  			<li class="depositinput">
+		  				@input(reservationForm("costs.depositPaid"), '_label -> "Deposit Received:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value"> 
+			        	}
+			        </li>
+											        
+					<li class="inlineinput">
+				       	@input(reservationForm("costs.datePaid"), '_label -> "Received On:") { (id, name, value, _) =>
+				        	<input type="text" name="@name" value="@value"> 
+				        }
+				    </li>			        
+				    <li class="inlineinput">
+				        @input(reservationForm("costs.payMethod"), '_label -> "Payment Method:") { (id, name, value, _) =>
+				        	<input type="text" name="@name" value="@value"> 
+				        }
+				   	</li>
+				</ol>		 
+			</fieldset>	
+			<fieldset class="transfer" >
+				<legend>Other Information</legend>
+				<ol>
+				  	<li class="transferinput">	        	
+						@input(reservationForm("notes"), args= 'rows -> 5, 'cols -> 30) { (id, name, value, _) =>
+						    <textarea id="@id" name="@name" readonly="readonly">@value</textarea>
+						}
+				  	</li>
+				</ol>
+			</fieldset>		
+		}
+		@form(routes.Application.getReservation(id), 'class -> "view") {
+			<!--Make the Edit reservation button only available to the correct role-->
+			 @if(session.get("role").equals("reservation")){   
+		    	<button type="button"><a href="@routes.Application.getReservation(id)">Edit this reservation</a></button>
+	    	}
+	    	<!--Make the Download PDF button only available to the correct role-->
+			 @if(session.get("role").equals("staff")){   
+		    	<button type="button"><a href="@routes.Download.downloadPDF(id)" method = "GET">Download Invoice in PDF format</a></button>	
+	    	}
+			<button type="button"><a href="@routes.Application.index("")" >Cancel</a></button>
+					
+	    }
+	
+	    
+
+
+    </div>
+}
