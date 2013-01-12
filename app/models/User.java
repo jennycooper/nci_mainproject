@@ -1,3 +1,12 @@
+/*
+ * Name: User.java
+ * Description: class to represent an authorised user of the system
+ * Written On: 14/11/2012
+ * @reference https://github.com/playframework/Play20/tree/master/samples/java/zentasks
+ * 			(using the authentication code from Play sample app)
+ * 
+ */
+
 package models;
 
 import java.util.*;
@@ -6,11 +15,6 @@ import javax.persistence.*;
 import play.db.ebean.*;
 import play.data.format.*;
 import play.data.validation.*;
-
-import com.avaje.ebean.*;
-
-
-
  
 
 @Entity 
@@ -58,7 +62,7 @@ public class User extends Model {
             .findUnique();
     }
     
-    // --
+
     
     public String toString() {
         return "User(" + email + ")";

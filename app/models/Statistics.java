@@ -1,15 +1,18 @@
+/*
+ * Name: Application.java
+ * Description: main controller for application
+ * Written On: 14/11/2012
+ * @author Jenny Cooper, x12101303
+ * 
+ */
+
 package models;
 
-import java.util.*;
-import java.util.Calendar;
 import java.util.Date;
-
-
 import play.db.ebean.Model;
 
 public class Statistics extends Model {
 	
-	//data members
 	protected Date date;
 	protected int numRes;
 	protected int numRooms;
@@ -97,7 +100,10 @@ public class Statistics extends Model {
 	}
 	
 	
-	//method to calculate statistics for the year
+	/*
+	 * calculate statistics for the year
+	 * @params args (Date, String)
+	 */
 	public void calcStats(Date year, String y){
 		//implemented in sub-classes
 

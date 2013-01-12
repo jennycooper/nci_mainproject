@@ -1,22 +1,19 @@
 package models;
 
+/*
+ * Name: Reserve.java
+ * Description: class to represent a reservation
+ * Written On: 01/10/2012
+ * @author Jenny Cooper, x12101303
+ * 
+ */
+
 import java.sql.Timestamp;
 import java.util.*;
-
 import javax.persistence.*;
-
-import com.avaje.ebean.Ebean;
 import com.avaje.ebean.Expr;
-import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
-import com.avaje.ebean.Query;
-import com.avaje.ebean.config.AutofetchConfig;
-
-import play.data.format.*;
-import play.data.validation.*;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
-import scala.Int;
+
 
 
 
@@ -191,26 +188,18 @@ public class Reserve extends Model {
 	public void setNotes(String notes) {
 		this.notes = notes;
 	}
-	public Reserve() {
-		//this.costs = new ResCosts();
-		//this.setCosts();
-	}
+
 	
-	//method to calculate the derived/transient attributes/fields for a newly created instance of Reserve
+	/*
+	 * method to calculate the derived/transient attributes/fields for a newly created instance of Reserve
+	 */
 	public void calcValues(){
 		if (this.checkin!=null && this.checkout!= null){
 			this.len = (int) ((this.checkout.getTime() - this.checkin.getTime())/(1000*60*60*24));
 		}
 		this.numRooms = this.detailList.size();
 	}
-	/**
-	//method to update the derived/transient attributes/fields for an existing instance of Reserve
-	public void updateCosts(Reserve res){
-		this.len = (int) ((this.checkout.getTime() - this.checkin.getTime())/(1000*60*60*24));
-		this.numRooms = this.detailList.size();
-		//this.costs.addTotals(this);	
-	}
-	**/
+
 	
 	//generic helper
   	public static Finder<Long, Reserve> find = new Finder<Long, Reserve>(Long.class, Reserve.class); 
@@ -220,7 +209,9 @@ public class Reserve extends Model {
   		return find.all();
   	}
   	
-  //method to get a list of reservations for a particular month (date is passed in as a parameter)
+  /*
+   * method to get a list of reservations for a particular month (date is passed in as a parameter)
+   */
   	public static List<Reserve> listMonth(Date queryDate){
   		
   		if (queryDate==null)
@@ -228,7 +219,6 @@ public class Reserve extends Model {
   		//get the month from the incoming date parameter
   		Calendar cal = Calendar.getInstance();
   		cal.setTime(queryDate);
-  		//int month = cal.get(Calendar.MONTH);
   		
   		//make start date for query to be the first day of the month 		
   		cal.set(Calendar.DAY_OF_MONTH, 01);
@@ -244,15 +234,14 @@ public class Reserve extends Model {
   		java.sql.Date sqlEndQuery = new java.sql.Date(endQuery.getTime());
 
    		return	find
-   			
-   				//.fetch("ResDetail")
-  				//.select("reservationID, checkin, checkout, roomNum")
   				.where()
   					.or(Expr.between("checkin", sqlStartQuery, sqlEndQuery), Expr.between("checkout", sqlStartQuery, sqlEndQuery))
   					.findList();
   	}
     
-  //method to get a list of reservations for a particular year (date is passed in as a parameter)
+  /*
+   * method to get a list of reservations for a particular year (date is passed in as a parameter)
+   */
   	public static List<Reserve> listYear(Date queryDate){
   		
   		if (queryDate==null)
@@ -275,37 +264,40 @@ public class Reserve extends Model {
   					.findList();
   	}
   	
-  	public void updateReservation(Reserve r, long id){
-  		
-  			//get guestid (primary key for guest table) first before updating reservation 
-  			//(because ebean will try to create a new row in the guest tables on the reservation update 
-  			//and preserve the old entry as back-up - the following code will override that)
+  	/*
+  	 * method to update an instance of Reserve
+  	 * needs to find unique ids for associated object attirbutes (related table entries)
+  	 * (ebean will automatically save older versions of these entries in the database, 
+  	 * then create new rows and increment these ids.)
+  	 * However this method will restore the original id's stop a new entry being created in the database 
+  	 */
+  	public void updateReservation(long id){
+
   			Long guestid = Reserve.find.byId(id).getMyGuest().guestID;
-  			//get all values for guest that have been bound from the user form, then set the guestid back to the original value, and update the guest entity
-  			Guest g = r.getGuest();
+  			//get all fields for guest that have been bound from the user form, then set the guestid back to the original value, and update the guest entity
+  			Guest g = this.getGuest();
   		    g.setGuestID(guestid);
   		    g.update();
   	    
   		    //do the same for all values of resdetail (from the detailList)
-  		    for (int i=0; i<r.getDetailList().size(); i++){
+  		    for (int i=0; i<this.getDetailList().size(); i++){
   		    	Long resid = Reserve.find.byId(id).getDetailList().get(i).detailID;
-  		    	ResDetail rd1 = r.getDetailList().get(i);
+  		    	ResDetail rd1 = this.getDetailList().get(i);
   		    	rd1.setDetailID(resid);
   		    	rd1.update();
-  		  
   		    }
   		    
   		    //do the same for rescosts
   		    Long costsid = Reserve.find.byId(id).getCosts().getCostsID();
-  		    ResCosts rescosts = r.getCosts();
+  		    ResCosts rescosts = this.getCosts();
   		    rescosts.setCostsID(costsid);
   		    rescosts.update();
-  		    System.out.println("here");
-  		    System.out.println(rescosts.getDepositPaid());
   		    
-  		    //finally update the reservation
-  		    r.update();	
-  		    
+  		    //finally update the reservation (for the persisted fields)
+  		    this.update();	 
+  		    //calculate totals and transient fileds, based on updated information
+  		    this.calcValues();
+			this.getCosts().addTotals(this);
   	}
   	
 

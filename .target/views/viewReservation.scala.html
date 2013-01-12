@@ -4,8 +4,7 @@
 
 @convertDate()=@{
 	var date:String = reservationForm("checkin").value();
-
-	routes.Application.returnToIndex(date)
+	routes.Calendars.GO_HOME(date)
 }
 
 @main("Euaiki Island Reservations") {
@@ -120,7 +119,7 @@
 			        	}
 			        </li>
 			        <li>
-			        	@input(reservationForm("whaleTotal"), '_label -> "Whale Watching:") { (id, name, value, _) =>
+			        	@input(reservationForm("whaleRate"), '_label -> "Whale Watching:") { (id, name, value, _) =>
 			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
 			        	}
 			        </li>
@@ -174,22 +173,22 @@
 		  	<fieldset class="transfer" >
 		  		<legend>Transfer Details</legend>
 		  		<ol>
-		  			<li class="transferinput">
-				 		@input(reservationForm("pickupTime"), '_label -> "Pick-up Time:") { (id, name, value, _) =>
-			        		<input type="text" name="" value="@value" readonly="readonly"> 
+			        <li class="transferinput">
+			        	@input(reservationForm("pickupTime"), '_label -> "Pick-up Time:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
 			        	}
 			        	@input(reservationForm("pickup"), '_label -> "Pick-up Location:") { (id, name, value, _) =>
-			        		<input type="text" name="" value="@value" style="width:150px" readonly="readonly"> 
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
 			        	}
-		        	</li>
-					<li class="transferinput">
-				 		@input(reservationForm("dropoffTime"), '_label -> "Drop-off Time:") { (id, name, value, _) =>
-			        		<input type="text" name="" value="@value" readonly="readonly"> 
+			        </li>
+			        <li class="transferinput">
+			        	@input(reservationForm("dropoffTime"), '_label -> "Drop-off Time:") { (id, name, value, _) =>
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
 			        	}
 			        	@input(reservationForm("dropoff"), '_label -> "Drop-off Location:") { (id, name, value, _) =>
-			        		<input type="text" name="" value="@value" style="width:150px" readonly="readonly"> 
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
 			        	}
-		        	</li>
+			        </li>
 		  		</ol>
 		  	</fieldset>
 		  	
@@ -198,18 +197,18 @@
 		  		<ol>
 		  			<li class="depositinput">
 		  				@input(reservationForm("costs.depositPaid"), '_label -> "Deposit Received:") { (id, name, value, _) =>
-			        		<input type="text" name="@name" value="@value"> 
+			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
 			        	}
 			        </li>
 											        
 					<li class="inlineinput">
 				       	@input(reservationForm("costs.datePaid"), '_label -> "Received On:") { (id, name, value, _) =>
-				        	<input type="text" name="@name" value="@value"> 
+				        	<input type="text" name="@name" value="@value" readonly="readonly"> 
 				        }
 				    </li>			        
 				    <li class="inlineinput">
 				        @input(reservationForm("costs.payMethod"), '_label -> "Payment Method:") { (id, name, value, _) =>
-				        	<input type="text" name="@name" value="@value"> 
+				        	<input type="text" name="@name" value="@value" readonly="readonly"> 
 				        }
 				   	</li>
 				</ol>		 
@@ -234,7 +233,7 @@
 			 @if(session.get("role").equals("staff")){   
 		    	<button type="button"><a href="@routes.Download.downloadPDF(id)" method = "GET">Download Invoice in PDF format</a></button>	
 	    	}
-			<button type="button"><a href="@routes.Application.index("")" >Cancel</a></button>
+			<button type="button"><a href="@routes.Calendars.index("")" >Cancel</a></button>
 					
 	    }
 	

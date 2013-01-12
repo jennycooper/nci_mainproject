@@ -8,14 +8,19 @@
     
     <div class="container">
 	    <div class="header">
+	    	<h1>Euaiki Island Reservations</h1>
 		    <h1>Statistics for @year</h1>
-		    	<li class="cal_buttons">
-		        	<a href="@routes.Application.index("")">Home</a>
-		    	</li>
-		    	<li class="cal_buttons">
-		        	<a href="#">Logout</a>
-		    	</li>
-		
+		    <div class="menu">
+			    <ul>
+			    	<li class="cal_buttons">
+			        	<a href="@routes.Calendars.index("")">Home</a>
+			    	</li>
+			    	<li class="cal_buttons">
+			        	<a href="#">Logout</a>
+			    	</li>
+				</ul>
+			</div>
+		</div>
 		  	@defining(Array("Jan", "Feb", "Mar", "Apr", "May", "Jun",
 														"Jul", "Aug", "Sep", "Oct", "Nov", "Dec")) {months =>
 		    <table class="table2">
@@ -32,10 +37,7 @@
 			  		</tr>
 			  	</thead>
 			  	<tbody>
-			  	
-			  		
-					
-						@for(x <- 0 until months.size){
+					@for(x <- 0 until months.size){
 			  			<tr>
 			  				
 			  				<th>@months(x) @year</th>
@@ -68,12 +70,10 @@
 			  			<td>@stats.getTotWhale()</td>
 			  			<td>@stats.getTotTransfers()</td>
 			  			<td>@stats.getTotal()</td>
-			  		</tr>
-			  		
+			  		</tr>		
 			  	</tbody>			
 			</table>
-			}
-		</div>
+			}	
 	</div>
   		
 }

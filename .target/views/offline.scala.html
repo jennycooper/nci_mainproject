@@ -1,4 +1,4 @@
-@(yearArray: List[Array[Array[RoomBooking]]], myYear:String)
+@(yearArray: List[Array[Array[BookedRoom]]], myYear:String)
 
 @import helper._
 
@@ -43,6 +43,49 @@
 			
 			.buttons a {
 				text-decoration: none;
+			}
+			
+			.cal_buttons{
+				display:inline;
+				background-color: black;
+				color: white;
+				padding: 7px;
+				font-family: "Trebuchet MS", sans-serif;
+				font-size: 16px;
+				-webkit-box-align: center;
+				text-align: center;
+				cursor: default;
+			}
+			
+			.cal_buttons a{
+				text-decoration: none;
+				color: white;
+			}
+			
+			.cal_buttons a:visited{
+				text-decoration: none;
+				color: white;
+			}
+			
+			.menu{
+			position:relative;
+			display:inline;
+			background-color:white;
+			width:400px;
+			}
+			
+			.menu ul li{
+			display:inline-block;
+			margin-right:20px;
+			}
+			
+			.menu ul li a{
+			text-decoration:none;
+			color:white;
+			}
+			
+			.menu ul li a:visited{
+			color:white;
 			}
 			
 			.cal_table {
@@ -145,12 +188,19 @@
 		    <div class="header">
 		    	<h1>Euaiki Island Reservation Calendar</h1>	
 		    	<h1>@myYear</h1>
-		    	<li class="buttons">
-		        	<a href="@routes.Application.downloadCopy(myYear)">Download Calendar</a>
-		    	</li>
-		    	<li class="buttons">
-		        	<a href="@routes.Application.index("")" class="btn">Cancel</a> 
-		    	</li>
+		    	<div class="menu">
+			    	<ul>
+				    	<li class="cal_buttons">
+				        	<a href="@routes.Calendars.downloadCopy(myYear)">Download Calendar</a>
+				    	</li>
+				    	<li class="cal_buttons">
+				        	<a href="@routes.Calendars.index("")" class="btn">Cancel</a> 
+				    	</li>
+				    	<li class="cal_buttons">
+		        			<a href="@routes.Authenticate.logout()">Logout</a>
+		    			</li>
+				    </ul>
+			    </div>
 			</div>
 			
 			@defining(Array("January", "February", "March", "April", "May", "June",

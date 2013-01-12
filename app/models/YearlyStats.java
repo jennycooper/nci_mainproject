@@ -1,11 +1,17 @@
+/*
+ * Name: YearlyStats.java
+ * Description: class to calculate statistics for a given year
+ * Written On: 14/11/2012
+ * @author Jenny Cooper, x12101303
+ * 
+ */
+
 package models;
 
 import java.util.*;
 import java.util.Calendar;
 import java.util.Date;
 
-
-import play.db.ebean.Model;
 
 public class YearlyStats extends Statistics {
 	protected ArrayList<MonthlyStats> mStats; 
@@ -44,11 +50,17 @@ public class YearlyStats extends Statistics {
 		//calculate the statistics
 		this.calcStats(this.date, year);	
 	}
-	//
+	/*
+	 * (non-Javadoc)
+	 * @see models.Statistics#calcStats(java.util.Date, java.lang.String)
+	 * calculate statistics for a given year
+	 */
 	@Override
 	public void calcStats(Date year, String y) {
+		//get all reservations for the year
 		List<Reserve> list =  Reserve.listYear(year);
 		this.numRes = list.size();
+		//loop through each reservation for the year, and calculate yearly totals
 		for (int i=0;i<list.size();i++){
 			Reserve res = list.get(i);
 			res.calcValues();
@@ -62,10 +74,13 @@ public class YearlyStats extends Statistics {
 		}	
 		
 		this.calcMStats(y);
-		
-		
 	}
 	
+	
+	/*
+	 * calculate statistics for each month of a given year and add them to the mStats arraylist
+	 * @param args String (to denote the year)
+	 */
 	public void calcMStats(String year){
 		for (int month=0; month<=11; month++){
 			this.mStats.add(new MonthlyStats(month, year));

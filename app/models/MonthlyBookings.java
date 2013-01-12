@@ -1,17 +1,16 @@
+/*
+ * Name: MonthlyBookings.java
+ * Description: class to represent a month of reservations
+ * Written On: 14/10/2012
+ * @author Jenny Cooper, x12101303
+ * 
+ */
+
 package models;
 
 import java.util.*;
 
-import com.avaje.ebean.Page;
-
-import play.data.format.*;
-import play.data.validation.*;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
-import scala.Int;
-
-
-
 
 
 public class MonthlyBookings extends Model {
@@ -19,7 +18,7 @@ public class MonthlyBookings extends Model {
 	private ArrayList<BookedRoom> myList;
 	private Date date; //comprising of a month and a year
 	private int totalNumDays; //total number of days in the month
-	final int NUMROOMS=8;
+	final int NUMROOMS=8; //number of rooms in the hotel
 	
 
 	public ArrayList<BookedRoom> getMyList() {
@@ -58,7 +57,10 @@ public class MonthlyBookings extends Model {
 
 	
 
-	//method to convert a list of roombookings for the month to a 2D array, which will be sent to the html view
+	/*
+	 * converts a list of roombookings for the month to a 2D array, which will be sent to the html view
+	 * return: RoomBooking[][]
+	 */
 	public BookedRoom[][] makeCalendar(){
 		BookedRoom calendarMonth[][] = new BookedRoom[totalNumDays][NUMROOMS];
 		Calendar thisDate = Calendar.getInstance();
@@ -73,7 +75,11 @@ public class MonthlyBookings extends Model {
     }
 	
 	
-	
+	/*
+	 * calculates number of days in a month
+	 * @param args Date
+	 * return: int
+	 */
 	public int daysInMonth(Date myDate){
 		if (myDate==null)
 			myDate = new Date();
@@ -87,9 +93,12 @@ public class MonthlyBookings extends Model {
 	}
 	
 	
-	//method to create a list of RoomBooking objects
-		public ArrayList<BookedRoom> createBookingList (Date date){
-		    
+	/*
+	 * create a list of RoomBooking instances to represent and days in a month that are booked
+	 * @param args Date
+	 * return: ArrayList<BookedRoom>
+	 */
+		public ArrayList<BookedRoom> createBookingList (Date date){ 
 			//get a list of Reservations, for the month being queried
 			List<Reserve> bookingList = Reserve.listMonth(date);
 			if (bookingList.isEmpty())
@@ -142,7 +151,10 @@ public class MonthlyBookings extends Model {
 			return myList;	
 	  	}
 		
-		//method to create objects of type RoomBooking, and add them to a list of RoomBookings
+		/*
+		 * create objects of type RoomBooking, and add them to a list of RoomBookings
+		 * @param args (Reserve, Calendar, int)
+		 */
 		public void addToList(Reserve res, Calendar cal, int dayOfMonth){
 			int roomNum;
 		    double deposit;
@@ -160,21 +172,23 @@ public class MonthlyBookings extends Model {
 		
 		
 			
-		//method to check if there is already an existing reservation for particular dates
-		public boolean alreadyExists(Reserve res){
-			//this method creates a list of RoomBookings for the whole month that the checkin date of the reservation starts
-			
+		/*
+		 * check if there is already an existing reservation for particular dates
+		 * @param args (Date, Date, Long, List<ResDetail>)
+		 * return: boolean (true if dates already booked, false if dates available)
+		 */
+		public boolean alreadyExists(Date checkin, Date checkout, Long resID, List<ResDetail> detailList){
+			//this method creates a list of RoomBookings for the whole month that the checkin date of the reservation starts	
 			//(this means that only one sql query is run on the database, even though it may bring back some rows of unnecessary data)
-			//List<RoomBooking> existingList = createBookingList(res.getCheckin());
-			
+
 			//convert checkin and checkout dates to type Calendar
 			Calendar calCheckin = Calendar.getInstance();
-	  		calCheckin.setTime(res.getCheckin());
+	  		calCheckin.setTime(checkin);
 			Calendar calCheckout = Calendar.getInstance();
-	  		calCheckout.setTime(res.getCheckout());
+	  		calCheckout.setTime(checkout);
 	  		//if the checkout date is in the next month, get all reservations for the next month also
 	  		if (calCheckin.get(Calendar.MONTH)!=calCheckout.get(Calendar.MONTH)){
-	  			List<BookedRoom> existingList2 = createBookingList(res.getCheckout());
+	  			List<BookedRoom> existingList2 = createBookingList(checkout);
 	  			if (existingList2.isEmpty()==false)
 	  				myList.addAll(existingList2);
 	  		}
@@ -186,7 +200,7 @@ public class MonthlyBookings extends Model {
 	  		
 	  		//start date at checkin date, converting it to type calendar
 	  		Calendar calDate = Calendar.getInstance();
-	  		calDate.setTime(res.getCheckin());
+	  		calDate.setTime(checkin);
 
 	  		//while loop to go through each date in the query reservation
 	  		while (calDate.compareTo(calCheckout)<=0){
@@ -194,12 +208,12 @@ public class MonthlyBookings extends Model {
 	  			Date d = calDate.getTime();
 	  			
 	  			//loop through each room in the reservation
-	  			for (int i=0;i<res.getDetailList().size(); i++){
+	  			for (int i=0;i<detailList.size(); i++){
 	  				//loop through each item in the existingList to compare date and roomNum
 	  				for (int j=0; j<myList.size(); j++){
 	  					//don't compare the dates of the reservation to itself!
-	  					if (myList.get(j).getReservationID()!=res.getReservationID()){
-	  						if ((d.equals(myList.get(j).getDate())&&res.getDetailList().get(i).getRoomNum()==myList.get(j).getRoomNum())){
+	  					if (myList.get(j).getReservationID()!=resID){
+	  						if ((d.equals(myList.get(j).getDate())&&detailList.get(i).getRoomNum()==myList.get(j).getRoomNum())){
 	  							return true;
 	  						}
 	  					}
@@ -211,7 +225,7 @@ public class MonthlyBookings extends Model {
 	  		return false;
 		}
 		
-	    //
+
 }
 
 

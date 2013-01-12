@@ -2,21 +2,22 @@ var months = new Array("January", "February", "March",
 "April", "May", "June", "July", "August", "September",
 "October", "November", "December");
 
+//@param month that is in a 'hidden' field
 function init() {
-	var str = $("#hidden").text();
+	var str = document.getElementById("hidden").innerHTML;
 	loadTab(str); 
 }
 
-
+//display an error message as an alert box
 function errMsg(key, msg){
-
 	alert(msg);
 }
 
 
 
 
-
+//find the correct tab, based on the month
+//@param month as a string
 function loadTab(str){
 	
 	var t;
@@ -54,24 +55,11 @@ function loadTab(str){
 
 
 
-//function for thetabbed section on index page for each month, (shows and hides certain elements) 
+//function to display the correct tabbed header on index page for a month
+//@param string to denote the month
 function tab(tab) {
 
-	//first set all displays to none, and all tabs to not active, then set selected tab to active, and display to block
-	/*
-	document.getElementById('tab1').style.display = 'none';
-	document.getElementById('tab2').style.display = 'none';
-	document.getElementById('tab3').style.display = 'none';
-	document.getElementById('tab4').style.display = 'none';
-	document.getElementById('tab5').style.display = 'none';
-	document.getElementById('tab6').style.display = 'none';
-	document.getElementById('tab7').style.display = 'none';
-	document.getElementById('tab8').style.display = 'none';
-	document.getElementById('tab9').style.display = 'none';
-	document.getElementById('tab10').style.display = 'none';
-	document.getElementById('tab11').style.display = 'none';
-	document.getElementById('tab12').style.display = 'none';
-	*/
+	//first set  all tabs to not active, then set selected tab to active, and display to block
 
 	document.getElementById('li_tab1').setAttribute("class","");
 	document.getElementById('li_tab2').setAttribute("class","");
@@ -87,7 +75,6 @@ function tab(tab) {
 	document.getElementById('li_tab12').setAttribute("class","");
 	var list = ('li_'+tab);
 
-	//document.getElementById(tab).style.display = 'block';
 	document.getElementById('li_'+tab).setAttribute("class", "active");
 
 	}

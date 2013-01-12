@@ -1,23 +1,20 @@
+/*
+ * Name: Guest.java
+ * Description: class to represent a guest
+ * Written On: 01/10/2012
+ * @author Jenny Cooper, x12101303
+ * 
+ */
+
 package models;
 
 import java.util.*;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.avaje.ebean.Page;
-
-import play.data.format.*;
-import play.data.validation.*;
 import play.db.ebean.Model;
-import play.db.ebean.Model.Finder;
-import scala.Int;
-
-
-
 
 @Entity
 @Table(name="guest")
@@ -25,14 +22,10 @@ public class Guest extends Model {
 	
 	@Id
 	public Long guestID;
-	
 	public String name;
 	public String email;
 	public String country;
-	
-	//@OneToOne(cascade=CascadeType.ALL)
-	//public Reserve myResID;
-	
+
 	
 	//getters and setters
   	public Long getGuestID() {

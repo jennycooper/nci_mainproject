@@ -2,14 +2,18 @@
 
 @import helper._
 
+@convertDate()=@{
+	var date:String = reservationForm("checkin").value();
+	routes.Calendars.GO_HOME(date)
+}
+
+
 <!DOCTYPE html>
 
 <html>
     <head>
         <title>Euaiki Island Reservations</title>
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-
-
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/hibiscus.png")">
         <script src="@routes.Assets.at("javascripts/javascript.js")" type="text/javascript"></script>
         <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
@@ -23,7 +27,7 @@
 			        	<a href="@routes.Authenticate.logout()">Logout</a>
 			    	</li>
 			    	<li class="form_buttons">
-			        	<a href="@routes.Application.index("")" >Return To Calendar</a>
+			        	<a href="@convertDate()" >Return To Calendar</a>
 			    	</li>
 			    </ul>
 	    		<h2>Edit Reservation Details</h2>
@@ -35,7 +39,7 @@
 				 		<legend>Guest Details</legend>
 					 	<ol >
 						
-							<li class = "hidden">
+							<li class = "hiddenField">
 							@input(reservationForm("reservationID")) { (id, name, value, _) =>
 				        		<input type="hidden" name="@name" value="@value"> 
 				        	}
@@ -122,10 +126,10 @@
 			        		}
 				        </li>
 				        <li>
-			        	@input(reservationForm("whaleTotal"), '_label -> "Whale Watching:") { (id, name, value, _) =>
-			        		<input type="text" name="@name" value="@value" > 
-			        	}
-			        </li>
+					        @input(reservationForm("whaleRate"), '_label -> "Whale Watching:") { (id, name, value, _) =>
+				        			<input type="text" name="@name" value="@value"> 
+				        		}
+			        	</li>
 				   	</ol>
 			   	</fieldset>
 			</div>
@@ -154,7 +158,7 @@
 			        		}
 				        </li>
 				        <li class="wideinput">
-			        	@input(reservationForm("whaleTotal"), '_label -> "Whale Watching Total:") { (id, name, value, _) =>
+			        	@input(reservationForm("whaleRate"), '_label -> "Whale Watching Total:") { (id, name, value, _) =>
 			        		<input type="text" name="@name" value="@value" readonly="readonly"> 
 			        	}
 			        	</li>
@@ -179,21 +183,21 @@
 			  		<legend>Transfer Details</legend>
 			  		<ol>
 			  			<li class="transferinput">
-					 		@input(reservationForm("pickupTime"), '_label -> "Pick-up Time:") { (id, name, value, _) =>
-				        		<input type="text" name="" value="@value" > 
+				        	@input(reservationForm("pickupTime"), '_label -> "Pick-up Time:") { (id, name, value, _) =>
+				        		<input type="text" name="@name" value="@value" > 
 				        	}
 				        	@input(reservationForm("pickup"), '_label -> "Pick-up Location:") { (id, name, value, _) =>
-				        		<input type="text" name="" value="@value" style="width:150px" > 
+				        		<input type="text" name="@name" value="@value" > 
 				        	}
-			        	</li>
-						<li class="transferinput">
-					 		@input(reservationForm("dropoffTime"), '_label -> "Drop-off Time:") { (id, name, value, _) =>
-				        		<input type="text" name="" value="@value" > 
+				        </li>
+			  			<li class="transferinput">
+				        	@input(reservationForm("dropoffTime"), '_label -> "Drop-off Time:") { (id, name, value, _) =>
+				        		<input type="text" name="@name" value="@value" > 
 				        	}
 				        	@input(reservationForm("dropoff"), '_label -> "Drop-off Location:") { (id, name, value, _) =>
-				        		<input type="text" name="" value="@value" style="width:150px" > 
+				        		<input type="text" name="@name" value="@value" style="width:150px"> 
 				        	}
-			        	</li>
+				        </li>
 			  		</ol>
 			  	</fieldset>
 			  	
@@ -226,24 +230,19 @@
 					  	</li>
 					</ol>
 				</fieldset>	
-				<input type="submit" value="Save these changes" class="button"> 
-				
+				<button type="submit">Save Changes</button> 
+				<button type="button"><a href="@routes.Application.viewReservation(id)" >Cancel</a></button>
+				 <!--delete the form-->
+		    	@if(session.get("role").equals("reservation")){ 
+		    		<button type="button"><a href="@routes.Application.delete(id)" >Delete Reservation</a></button>
+		    	}
 			 </div> 
 
 		    }
-		
-		    <!--delete the form-->
-		    @if(session.get("role").equals("reservation")){   
-			    @form(routes.Application.delete(id), 'class -> "topRight") {
-			    	
-			        <input type="submit" value="Delete this reservation" class="btn danger">
-			    }
-		    }
+
+
 		    
-		    <button type="button"><a href="@routes.Application.viewReservation(id)" >Cancel</a></button>
-		    <p class="buttons">
-		        <a href="@routes.Application.nextpage">Go to next page</a>
-		    </p>
+		    
 		</div>
     </body>
     

@@ -1,5 +1,13 @@
 package models;
 
+/*
+ * Name: BookedRoom.java
+ * Description: class to represent a room that is currently booked for any day
+ * Written On: 14/10/2012
+ * @author Jenny Cooper, x12101303
+ * 
+ */
+
 import java.util.*;
 
 import javax.persistence.*;
@@ -55,10 +63,10 @@ public class BookedRoom extends Model {
 	public void setDeposit(double deposit) {
 		this.deposit = deposit;
 	}
+	
 	public BookedRoom(int roomNum, Date date, Long reservationID,
 			String guestName, double deposit) {
 		this.roomNum = roomNum;
-		//this.dayOfMonth = dayOfMonth;
 		this.date = date;
 		this.reservationID = reservationID;
 		this.guestName = guestName;

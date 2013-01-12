@@ -1,11 +1,12 @@
-/*
- * Written By: Jenny Cooper
- *Description: Takes a reservation and writes it to a pdf (to folder euaiki_offline on user's computer)
- *
- */
- 
 package models;
  
+/*
+ * Name: DownloadPDF.java
+ * Description: class to create a pdf invoice and download it to the user's local pc
+ * Written On: 01/11/2012
+ * @author Jenny Cooper, x12101303
+ * 
+ */
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -91,6 +92,9 @@ public class DownloadPDF {
         }
     }
     
+    /*
+     * create a list of paragraphs, containing fields and values to be inserted in the pdf invoice
+     */
     public static ArrayList<Paragraph> getDetails(Reserve res){
     	 ArrayList<Paragraph> p = new ArrayList<Paragraph>();
     	 
@@ -111,6 +115,9 @@ public class DownloadPDF {
     	return p;
     }
     
+    /*
+     * create a table, containing rates and costs values to be inserted in the pdf invoice
+     */
     public static PdfPTable getTable(Reserve res){
     	DecimalFormat df = new DecimalFormat("0.00");
     	float[] colsWidth ={2f, 1f};

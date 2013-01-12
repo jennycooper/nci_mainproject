@@ -1,3 +1,11 @@
+/*
+ * Name: YearlyBookings.java
+ * Description: class to represent all reservations for a year
+ * Written On: 14/10/2012
+ * @author Jenny Cooper, x12101303
+ * 
+ */
+
 package models;
 
 import play.db.ebean.Model;
@@ -44,6 +52,10 @@ public class YearlyBookings extends Model {
 		this.yearlyCalendar = yearlyCalendar;
 	}
 
+	/*
+	 * create a calendar of bookings for each month of the year
+	 * return: ArrayList<BookedRoom[][]>
+	 */
 	public ArrayList<BookedRoom[][]> fillCalendar(){
 		//go through each month in the year (in the array of months)
 		for (int i=0; i<this.months.length;i++){
@@ -53,9 +65,9 @@ public class YearlyBookings extends Model {
 			try {
 				queryDate = new SimpleDateFormat("MMMM yyyy").parse(myMonth);
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			//create an instance of MonthlyBookings, and call on it's method to create a calendar of bookings for the month
 			MonthlyBookings mb = new MonthlyBookings(queryDate);
 			if (mb!=null){
 				yearlyCalendar.add(mb.makeCalendar());

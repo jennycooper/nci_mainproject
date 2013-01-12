@@ -10,14 +10,8 @@ GET     /login                      controllers.Authenticate.login()
 POST    /login                      controllers.Authenticate.authenticate()
 GET     /logout                     controllers.Authenticate.logout()
 
-GET 	/index						controllers.Application.index(date:String ?="")
-GET		/index/:date				controllers.Application.returnToIndex(date: String)
-
-# nextpage page
-GET 	/nextpage					controllers.Application.nextpage()
-
-GET		/newpage					controllers.Application.newpage(date:String  ?= "March 2012")
-POST 	/newpage/:myDate			controllers.Application.newpage(myDate:String)
+GET 	/index						controllers.Calendars.index(date:String ?="")
+GET		/index/:date				controllers.Calendars.GO_HOME(date: String)
 
 #create a new reservation
 GET		/reservation/new			controllers.Application.create()
@@ -39,10 +33,10 @@ POST    /reservation/:id            controllers.Application.update(id:Long)
 POST    /reservation/:id/delete     controllers.Application.delete(id:Long)
 
 # get a yearly calendar of reservations, that can then be downloaded as an offline copy
-GET		/download					controllers.Application.yearCalendar(year:String)
+GET		/download					controllers.Calendars.yearCalendar(year:String)
 
 #download an offline copy of the yearly calendar
-GET		/downloaded					controllers.Application.downloadCopy(year:String)
+GET		/downloaded					controllers.Calendars.downloadCopy(year:String)
 
 #download invoice (pdf version) of existing reservation
 GET    	/invoice/reservation/:id    controllers.Download.downloadPDF(id:Long)

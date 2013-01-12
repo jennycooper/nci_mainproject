@@ -400,14 +400,6 @@ background-color:white;
 width:400px;
 }
 
-.menu img{
-position: absolute;
-top: -60px;
-left:820px;
-width:135px;
-z-index:50;
-}
-
 .menu ul li{
 display:inline-block;
 margin-right:20px;
@@ -424,6 +416,14 @@ color:white;
 
 .menu form {
 border: 1px solid black;
+}
+
+.menu img{
+position: absolute;
+top: -60px;
+left:820px;
+width:135px;
+z-index:50;
 }
 
 .cal_table {
@@ -523,7 +523,7 @@ padding: 3px;
 	color: black;
 }
 
-.table2 .even  {
+.table2 .odd  {
 	background-color:#cee1b5;
 	}
 
@@ -538,9 +538,6 @@ background-color: #9abb8c;
 .table1 tbody td a{
 text-decoration: none;
 }
-
-
-
 
 ul{
 display:block;
@@ -610,15 +607,17 @@ background:-webkit-gradient(
 z-index: 100;
 }
 
-.hidden {
+#hidden {
+display: none;
+}
+
+.hiddenField {
 display: none;
 }
 
 #Tabs #year{
-#color: white;
 font-size: 18px;
 height:39px;
-#line-height: 39px;
 background-color:black;
 }
 

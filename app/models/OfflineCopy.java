@@ -31,7 +31,7 @@ public class OfflineCopy {
 			br = new BufferedReader(
                                new InputStreamReader(conn.getInputStream()));
 			String inputLine;
-			//create a new directory (if it doens't already exist) to store the offline copy
+			//create a new directory (if it doesn't already exist) to store the offline copy
 			File dir = new File("/euaiki_offline_calendar");
 			if (!dir.exists()) {
 				dir.mkdir();

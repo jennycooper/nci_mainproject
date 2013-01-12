@@ -1,3 +1,11 @@
+/*
+ * Name: MonthlyStats.java
+ * Description: class to calculate statistics for a given month
+ * Written On: 14/11/2012
+ * @author Jenny Cooper, x12101303
+ * 
+ */
+
 package models;
 
 import java.util.*;
@@ -11,6 +19,7 @@ public class MonthlyStats extends Statistics {
 	
 	//default constructor
 	public MonthlyStats(){
+		super();
 		this.numRes =0;
 		this.numRooms=0;
 		this.totWhale=0;
@@ -30,6 +39,9 @@ public class MonthlyStats extends Statistics {
 		this.calcStats(this.date, year);
 	}
 
+	/*
+	 * @see models.Statistics#calcStats(java.util.Date, java.lang.String)
+	 */
 	@Override
 	public void calcStats(Date year, String y) {
 		List<Reserve> list =  Reserve.listMonth(year);
