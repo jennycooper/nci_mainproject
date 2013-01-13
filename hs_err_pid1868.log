@@ -1,0 +1,135 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 704512 bytes for card table expansion
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   In 32 bit mode, the process size limit was hit
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Use 64 bit Java on a 64 bit OS
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (cardTableModRefBS.cpp:290), pid=1868, tid=5884
+#
+# JRE version: 7.0_04-b20
+# Java VM: Java HotSpot(TM) Client VM (23.0-b21 mixed mode windows-x86 )
+# Failed to write core dump. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0187b400):  JavaThread "Unknown thread" [_thread_in_vm, id=5884, stack(0x019b0000,0x01ab0000)]
+
+Stack: [0x019b0000,0x01ab0000],  sp=0x01aaf93c,  free space=1022k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x16e261]
+V  [jvm.dll+0x1688c5]
+V  [jvm.dll+0x5f40f]
+V  [jvm.dll+0x5fbd0]
+V  [jvm.dll+0x6bd00]
+V  [jvm.dll+0x732b3]
+V  [jvm.dll+0x6c325]
+V  [jvm.dll+0x6add3]
+V  [jvm.dll+0x74f77]
+V  [jvm.dll+0x128434]
+V  [jvm.dll+0x148e7a]
+V  [jvm.dll+0xa8d4f]
+C  [java.exe+0x1347]
+C  [java.exe+0x1da9]
+C  [java.exe+0xa0cb]
+C  [java.exe+0xa155]
+C  [kernel32.dll+0x4ed6c]  BaseThreadInitThunk+0x12
+C  [ntdll.dll+0x6377b]  RtlInitializeExceptionChain+0xef
+C  [ntdll.dll+0x6374e]  RtlInitializeExceptionChain+0xc2
+
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+
+Other Threads:
+
+=>0x0187b400 (exited) JavaThread "Unknown thread" [_thread_in_vm, id=5884, stack(0x019b0000,0x01ab0000)]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00b00000 - 0x00b2f000 	C:\Program Files\Java\jdk1.7.0_04\bin\java.exe
+0x77830000 - 0x7796c000 	C:\Windows\SYSTEM32\ntdll.dll
+0x76390000 - 0x76464000 	C:\Windows\system32\kernel32.dll
+0x75a90000 - 0x75adb000 	C:\Windows\system32\KERNELBASE.dll
+0x76270000 - 0x76310000 	C:\Windows\system32\ADVAPI32.dll
+0x77620000 - 0x776cc000 	C:\Windows\system32\msvcrt.dll
+0x770d0000 - 0x770e9000 	C:\Windows\SYSTEM32\sechost.dll
+0x761b0000 - 0x76251000 	C:\Windows\system32\RPCRT4.dll
+0x77760000 - 0x77829000 	C:\Windows\system32\USER32.dll
+0x75d90000 - 0x75dde000 	C:\Windows\system32\GDI32.dll
+0x76470000 - 0x7647a000 	C:\Windows\system32\LPK.dll
+0x77580000 - 0x7761d000 	C:\Windows\system32\USP10.dll
+0x74a20000 - 0x74bbe000 	C:\Windows\WinSxS\x86_microsoft.windows.common-controls_6595b64144ccf1df_6.0.7601.17514_none_41e6975e2bd6f2b2\COMCTL32.dll
+0x76120000 - 0x76177000 	C:\Windows\system32\SHLWAPI.dll
+0x77a40000 - 0x77a5f000 	C:\Windows\system32\IMM32.DLL
+0x75cc0000 - 0x75d8c000 	C:\Windows\system32\MSCTF.dll
+0x60ed0000 - 0x60f8e000 	C:\Program Files\Java\jdk1.7.0_04\jre\bin\msvcr100.dll
+0x5ad50000 - 0x5b09a000 	C:\Program Files\Java\jdk1.7.0_04\jre\bin\client\jvm.dll
+0x6dbb0000 - 0x6dbb7000 	C:\Windows\system32\WSOCK32.dll
+0x75f40000 - 0x75f75000 	C:\Windows\system32\WS2_32.dll
+0x77a30000 - 0x77a36000 	C:\Windows\system32\NSI.dll
+0x74200000 - 0x74232000 	C:\Windows\system32\WINMM.dll
+0x76260000 - 0x76265000 	C:\Windows\system32\PSAPI.DLL
+0x65340000 - 0x6534c000 	C:\Program Files\Java\jdk1.7.0_04\jre\bin\verify.dll
+0x637b0000 - 0x637d0000 	C:\Program Files\Java\jdk1.7.0_04\jre\bin\java.dll
+0x63790000 - 0x637a3000 	C:\Program Files\Java\jdk1.7.0_04\jre\bin\zip.dll
+0x71130000 - 0x7121b000 	C:\Windows\system32\dbghelp.dll
+
+VM Arguments:
+jvm_args: -Xms512M -Xmx1024M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M -Dfile.encoding=UTF8 -Dplay.version=2.0.4 -Dsbt.ivy.home=C:\play-2.0.4\framework\..\repository -Dplay.home=C:\play-2.0.4\framework\. -Dsbt.boot.properties=file:///C:/play-2.0.4/framework/sbt/sbt.boot.properties 
+java_command: C:\play-2.0.4\framework\sbt\sbt-launch.jar play
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\java\jdk1.7.0_04
+CLASSPATH=.;C:\Program Files\Apache Software Foundation\Tomcat 7.0\lib\servlet-api.jar
+PATH=C:\Program Files\Java\jdk1.7.0_04\bin;C:\apache-ant-1.8.4\bin;C:\Program Files\Common Files\Microsoft Shared\Windows Live;C:\Windows\syst;C:\play-2.0.4;C:\Python27;C:\Python27\Scripts;C:\Program Files\java\jdk1.7.0_04\bin;C:\play-2.0.4
+USERNAME=Pete
+SHELL=C:\PROGRA~1\RATIONAL\RATION~1\NUTCROOT\mksnt\sh.exe
+DISPLAY=:0.0
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=x86 Family 6 Model 28 Stepping 2, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 7 Build 7601 Service Pack 1
+
+CPU:total 2 (1 cores per cpu, 2 threads per core) family 6 model 28 stepping 2, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, ht, tsc
+
+Memory: 4k page, physical 1039672k(179792k free), swap 2390512k(304988k free)
+
+vm_info: Java HotSpot(TM) Client VM (23.0-b21) for windows-x86 JRE (1.7.0_04-b20), built on Apr 12 2012 03:26:46 by "java_re" with unknown MS VC++:1600
+
+time: Wed Nov 14 16:03:09 2012
+elapsed time: 0 seconds
+

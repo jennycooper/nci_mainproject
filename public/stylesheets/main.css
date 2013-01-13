@@ -1,0 +1,630 @@
+/* CSS Resets */
+
+html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,address,cite,code,del,dfn,em,img,ins,q,small,strong,sub,sup,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{border:0;margin:0;padding:0}article,aside,figure,figure img,figcaption,hgroup,footer,header,nav,section,video,object{display:block}a img{border:0}figure{position:relative}figure img{width:100%}
+
+
+body {
+background-attachment:scroll;
+background-position:left 100px;
+background-repeat:no-repeat;
+}
+
+button, .button {
+-webkit-appearance: button;
+margin: 0em;
+font: -webkit-small-control;
+color: initial;
+letter-spacing: normal;
+word-spacing: normal;
+text-transform: none;
+text-indent: 0px;
+text-shadow: none;
+-webkit-box-align: center;
+text-align: center;
+cursor: default;
+color: buttontext;
+padding: 2px 6px 3px;
+border: 2px outset buttonface;
+border-image: initial;
+background-color: buttonface;
+box-sizing: border-box;
+}
+
+button a{
+	text-decoration: none;
+	color: black;
+}
+
+button a:hover{
+	cursor:default;
+}
+
+button a:visited{
+	text-decoration: none;
+	color: black;
+}
+
+table {
+border-spacing: 2px;
+border-color: gray;
+}
+
+/* making an overall container, to specifiy max and min widths */
+.container {
+margin-left:auto;
+margin-right:auto;
+width: 90%;
+max-width:1040px;
+min-width:1000px;
+background-color: white;
+padding:10px;
+}
+
+.small_container{
+margin-left:auto;
+margin-right:auto;
+margin-top: 20px;
+width: 770px;
+}
+
+.row {
+width: 100%;
+margin: 0 auto;
+overflow: hidden;
+
+}
+
+.row .login {
+width: 100%;
+}
+
+.login{
+margin-left:auto;
+margin-right:auto;
+position:relative;
+}
+
+.centered{
+width: 100%;
+display:block;
+margin-left:auto;
+margin-right:auto;
+opacity:0.6;
+filter:alpha(opacity=60); /* For IE8 and earlier */
+}
+
+
+form.view {
+	background: #fcfff4;
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZjZmZmNCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjElIiBzdG9wLWNvbG9yPSIjZGZlNWQ3IiBzdG9wLW9wYWNpdHk9IjEiLz4KICAgIDxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2IzYmVhZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgPC9saW5lYXJHcmFkaWVudD4KICA8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2dyYWQtdWNnZy1nZW5lcmF0ZWQpIiAvPgo8L3N2Zz4=);
+	background: -moz-linear-gradient(top,  #fcfff4 0%, #dfe5d7 1%, #b3bead 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fcfff4), color-stop(1%,#dfe5d7), color-stop(100%,#b3bead));
+	background: -webkit-linear-gradient(top,  #fcfff4 0%,#dfe5d7 1%,#b3bead 100%);
+	background: -o-linear-gradient(top,  #fcfff4 0%,#dfe5d7 1%,#b3bead 100%);
+	background: -ms-linear-gradient(top,  #fcfff4 0%,#dfe5d7 1%,#b3bead 100%);
+	background: linear-gradient(to bottom,  #fcfff4 0%,#dfe5d7 1%,#b3bead 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	padding: 20px;
+}
+
+form.view legend {
+	font-size: 16px;
+	font-weight: bold;
+	padding: 10px;
+
+}
+
+form.view ol li {
+	background: #b9cf6a;
+	background: rgba(255,255,255,.3);
+	border-color: #e3ebc3;
+	border-color: rgba(255,255,255,.6);
+	border-style: solid;
+	border-width: 2px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	line-height: 30px;
+	list-style: none;
+	padding: 5px 10px;
+	margin-bottom: 2px;
+	margin-right: 10px;	
+	#width: 240px;
+}
+
+
+form.view input{
+	border: none;
+	margin-left: 5px;
+	background-color: #e1ead9;
+	width: 100px;
+	text-align:right;
+}
+
+form.view textarea{
+	background-color: #e1ead9;
+	border: none;
+	width: 250px;
+	height: 70px;
+}
+
+form.view .edit textarea{
+	background-color: white;
+	border: none;
+}
+
+form.view .edit input{
+	#border: 1px solid black;
+	background-color: white;
+}
+
+
+form.view fieldset{
+	margin-bottom: 10px;
+
+}
+
+form.view dl{
+	clear: left;
+}
+
+
+form.view dt{
+	float: left;
+	width: 110px;
+}
+
+form.view .box{
+	width:250px;
+	float: left;
+	margin-right: 45px;
+	margin-left: 10px;
+}
+
+form.view .guest, form.view .transfer{
+	clear: left;
+	border: 2px solid lightgrey;
+	padding: 10px;
+}
+
+form.view .guest input, form.view .transfer input{
+	text-align:left;
+}
+
+
+form.view .transferinput {
+	float: left;
+	width: 350px;
+}
+form.view .transferinput dt {
+	width: 140px;
+}
+form.view .transferinput dd {
+	#width: 120px;
+	text-align: left;
+}
+
+form.view .inlineinput{
+	float: left;
+	width: 260px;
+}
+form.view .inlineinput dd{
+	display: inline;
+}
+	
+form.view .wideinput{
+	width: 300px;
+	}
+form.view .wideinput dt {
+	width: 180px;
+	}	
+form.view .wideinput dd {
+	text-align: right;
+	}	
+	
+form.view .depositinput {
+	width: 300px;
+	float: left;
+}	
+form.view .depositinput dt {
+	width: 180px;
+}
+
+
+
+
+.ctext {
+font-size:36px;
+font-weight: bold;
+font-family: "Lithos Pro Regular";
+margin: 10px;
+position: absolute;
+top: 10px;
+left: 150px;
+}
+
+.downloaded p{
+	font-size: 18px; 
+	font-weight: bold;
+}
+
+.downloaded .icon{
+position: absolute;
+	left: 250px;
+	top: 150px;
+	}
+
+.return_button{
+	display:block;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top: 10px;
+	background-color:black;
+	color: white;
+	height: 27px;
+	width: 40%;
+	padding: 5px;
+}
+
+.return_button a{
+	color: white;
+	text-decoration:none;
+}
+
+.relative{
+	position:relative;
+	}
+
+.downloaded {
+	position: absolute;
+	top: 50px;
+	left: 230px;
+	border: 10px solid black;
+	background-color: white;
+	width: 35%;
+	padding: 8px;
+	text-align: center;
+	font-family: "Trebuchet MS", sans-serif;
+	font-size: 18px; 
+}
+
+.loginform form {
+	position:absolute;
+	top: 70px;
+	left: 250px;
+    margin: 10px auto 10px;
+    width: 200px;
+    padding: 10px;
+    background-color:white;
+    border-radius: 5px;
+    box-shadow: 10px 10px 10px rgba(0,0,0,.3);
+    text-align: center;
+    border: 10px solid black;
+   }
+   
+.loginform button{
+-webkit-box-align: center;
+text-align: center;
+cursor: default;
+color: buttontext;
+padding: 2px 6px 3px;
+border: 2px outset buttonface;
+border-image: initial;
+background-color: beige;
+#box-sizing: border-box;
+font-size: 16px;
+font-weight: bold;
+width: 150px;
+}
+   
+.loginform p {
+	margin-top:15px;
+	margin-bottom: 0px;
+	}
+	
+.icon {
+	position:absolute;
+	top: 120px;
+	left: 190px;
+	z-index: 5;
+}   
+.header {
+	background-color: lightgrey;
+	margin-bottom: 10px;
+	padding:10px;
+}
+
+.header h1 {
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold; 
+    color: black;
+    margin-bottom: 20px;
+}
+
+.formheader {
+	background: #a4b496;
+	padding:10px;
+}
+
+.formheader h2 {
+	font-size: 26px;
+    font-weight: bold; 
+    color: black;
+    margin-bottom: 20px;
+   }
+
+.button{
+-webkit-box-align: center;
+text-align: center;
+cursor: default;
+color: black;
+padding: 2px 6px 3px;
+border: 2px outset buttonface;
+border-image: initial;
+background-color: buttonface;
+width: 200px;
+}
+
+.cal_buttons, .form_buttons{
+display:inline;
+background-color: black;
+color: white;
+padding: 7px;
+font-family: "Trebuchet MS", sans-serif;
+font-size: 16px;
+-webkit-box-align: center;
+text-align: center;
+cursor: default;
+}
+.cal_buttons a, .form_buttons a{
+text-decoration: none;
+color: white;
+}
+.cal_buttons a:visited, .form_buttons a:visited{
+text-decoration: none;
+color: white;
+}
+.form_buttons{
+margin: 10px;
+float: right;
+}
+
+.menu{
+position:relative;
+display:inline;
+background-color:white;
+width:400px;
+}
+
+.menu ul li{
+display:inline-block;
+margin-right:20px;
+}
+
+.menu ul li a{
+text-decoration:none;
+color:white;
+}
+
+.menu ul li a:visited{
+color:white;
+}
+
+.menu form {
+border: 1px solid black;
+}
+
+.menu img{
+position: absolute;
+top: -60px;
+left:820px;
+width:135px;
+z-index:50;
+}
+
+.cal_table {
+width:100%;
+}
+
+table.table1{
+	table-layout: fixed;
+    font-family: "Trebuchet MS", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.4em;
+    font-style: normal;
+    border-collapse:separate;
+}
+
+.table1 thead th, .table2 thead th, .table1 tfoot td{
+    padding:15px;
+    color:#fff;
+    text-shadow:1px 1px 1px #568F23;
+    border:1px solid #93CE37;
+    border-bottom:3px solid #9ED929;
+    background-color:#9DD929;
+    background:-webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.02, rgb(123,192,67)),
+        color-stop(0.51, rgb(139,198,66)),
+        color-stop(0.87, rgb(158,217,41))
+        );
+    background: -moz-linear-gradient(
+        center bottom,
+        rgb(123,192,67) 2%,
+        rgb(139,198,66) 51%,
+        rgb(158,217,41) 87%
+        );
+    -webkit-border-top-left-radius:5px;
+    -webkit-border-top-right-radius:5px;
+    -moz-border-radius:5px 5px 0px 0px;
+    border-top-left-radius:5px;
+    border-top-right-radius:5px;
+}
+
+.table2 thead th{
+padding: 3px;
+}
+
+.table1 thead th:empty, .tbale2 thead th:empty{
+background-color: white;
+background: white;
+border: 0px;
+}
+
+.table1 tbody th, .table2 tbody th{
+    padding:15px;
+    color:#fff;
+    text-shadow:1px 1px 1px #568F23;
+    border:1px solid #93CE37;
+    border-bottom:3px solid #9ED929;
+    background-color:#9DD929;
+    background:-webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.02, rgb(123,192,67)),
+        color-stop(0.51, rgb(139,198,66)),
+        color-stop(0.87, rgb(158,217,41))
+        );
+    background: -moz-linear-gradient(
+        center bottom,
+        rgb(123,192,67) 2%,
+        rgb(139,198,66) 51%,
+        rgb(158,217,41) 87%
+        );
+}
+
+.table2 tbody th{
+padding: 3px;
+}
+
+.table1 tbody td, .table2 tbody td{
+    padding:3px;
+    text-align:center;
+    background-color:#DEF3CA;
+    border: 1px solid #E7EFE0;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+    color:#666;
+    text-shadow:1px 1px 1px #fff;
+    width: 11.5%;
+}
+
+.table2 tbody td{
+	padding: 1px;
+	color: black;
+}
+
+.table2 .odd  {
+	background-color:#cee1b5;
+	}
+
+.table1 .booked {
+background-color: #e3aa46;
+}
+
+.table1 .paid {
+background-color: #9abb8c;
+}
+
+.table1 tbody td a{
+text-decoration: none;
+}
+
+ul{
+display:block;
+}
+
+#Tabs{
+width: 100%
+}
+
+#Tabs ul {
+margin-left: 117px;
+list-style-type: none;
+}
+
+#Tabs ul li {
+display: inline-block;
+clear: none;
+float: left;
+height: 40px;
+background:grey;
+width: 7.65%;
+
+}
+
+#Tabs ul li a, #year{
+position: relative;
+top: 0px;
+display: block;
+margin-top: 0px;
+margin-left: 0px;
+line-height: 39px;
+padding-left: 1px;
+border:1px solid white;
+border-bottom: 0px;
+text-decoration: none;
+font-size: 14px;
+font-family: "Trebuchet MS", sans-serif;
+font-weight: bold;
+color:white;
+text-align:center;
+}
+
+#Tabs ul li a:hover {
+text-decoration: none; 
+cursor:pointer;
+color: black;
+}
+
+#Tabs ul .active {
+position: relative;
+top: 0px;
+background-color: #9DD929;
+background:-webkit-gradient(
+        linear,
+        left bottom,
+        left top,
+        color-stop(0.02, rgb(123,192,67)),
+        color-stop(0.51, rgb(139,198,66)),
+        color-stop(0.87, rgb(158,217,41))
+        );
+    background: -moz-linear-gradient(
+        center bottom,
+        rgb(123,192,67) 2%,
+        rgb(139,198,66) 51%,
+        rgb(158,217,41) 87%
+        );
+z-index: 100;
+}
+
+#hidden {
+display: none;
+}
+
+.hiddenField {
+display: none;
+}
+
+#Tabs #year{
+font-size: 18px;
+height:39px;
+background-color:black;
+}
+
+.alertMsg {
+	background-color: beige;
+	font-size: 22px;
+	padding: 10px;
+	
+
+}

@@ -1,0 +1,48 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /		                   controllers.Authenticate.login()
+
+# Authentication
+GET     /login                      controllers.Authenticate.login()
+POST    /login                      controllers.Authenticate.authenticate()
+GET     /logout                     controllers.Authenticate.logout()
+
+GET 	/index						controllers.Calendars.index(date:String ?="")
+GET		/index/:date				controllers.Calendars.GO_HOME(date: String)
+
+#create a new reservation
+GET		/reservation/new			controllers.Application.create()
+POST    /reservation/           	controllers.Application.save()
+
+#add more rooms to the reservation
+GET		/reservation/new/			controllers.Application.addRooms(rooms: String ?= "1")
+POST	/reservation/new/:rooms		controllers.Application.addRooms(rooms: String)
+
+# get an existing reservation
+GET		/reservation/:id			controllers.Application.viewReservation(id: Long)
+
+#get an existing reservation in editable format
+GET		/reservation/edit/:id		controllers.Application.getReservation(id: Long)
+
+#update an existing reservation
+POST    /reservation/:id            controllers.Application.update(id:Long)
+# Delete a reservation
+POST    /reservation/:id/delete     controllers.Application.delete(id:Long)
+
+# get a yearly calendar of reservations, that can then be downloaded as an offline copy
+GET		/download					controllers.Calendars.yearCalendar(year:String)
+
+#download an offline copy of the yearly calendar
+GET		/downloaded					controllers.Calendars.downloadCopy(year:String)
+
+#download invoice (pdf version) of existing reservation
+GET    	/invoice/reservation/:id    controllers.Download.downloadPDF(id:Long)
+
+# get statistics for a year
+GET		/statistics					controllers.Stats.viewStats(y:String)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
