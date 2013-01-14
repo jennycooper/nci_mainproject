@@ -80,7 +80,7 @@
 				  				@inputText(reservationForm("dropoffTime"), '_label -> "Drop-off Time:")
 				  				@input(reservationForm("dropoff"), '_label -> "Drop-off Location:") { (id, name, value, _) =>
 			        				<input type="text" name="" value="@value" style="width:150px"> 
-			        			}
+    						}
 				  			</li>
 				  		</ol>
 				  	</fieldset>	
@@ -93,9 +93,12 @@
 				  		</ol>
 				  	</fieldset>		
 		        </div>
+
 		        <button type="submit">Create Reservation</button> 
-		        <button type="button"><a href="@routes.Calendars.index("")">Cancel</a></button>	            
+		        <button type="button"><a href="@routes.Calendars.index("")">Cancel</a></button>	            	            
         	}
+    
+
 
      </div>   
     

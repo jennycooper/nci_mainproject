@@ -2,4 +2,4 @@
 
 # --- !Ups
 
-insert into account values ("jenny@gmail", "jen", "ppp", "reservation");
+insert into account (email,name,password, role) values ('jenny@gmail','jen', 'ppp', 'reservation');
