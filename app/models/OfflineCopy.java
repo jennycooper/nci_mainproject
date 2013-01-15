@@ -116,7 +116,7 @@ public class OfflineCopy {
 
 			finally{
 				try {
-					if (br!=null)
+					//if (br!=null)
 						br.close();
 					if (bw!=null)
 						bw.close();
