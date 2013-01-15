@@ -75,6 +75,7 @@ public class OfflineCopy {
 			url = new URL("http://www.goodlivingnutrition.ie/contact.html");
 			//url = new URL("http://localhost:9000/download?year="+year);
 			URLConnection conn = url.openConnection();
+			System.out.println(conn.getContentLength());
 			// open the stream to the url and put it into BufferedReader
 			br = new BufferedInputStream(
 					conn.getInputStream());
@@ -102,6 +103,7 @@ public class OfflineCopy {
 			String data =("<h2>" + "Copy downloaded on: "+ downloadDate + "</h2>");
 			//bw.write(data);
 			int ch=0;
+			System.out.println(br.read());
 			while ((ch=br.read()) != -1) {
 				bw.write(ch);				
 			}
