@@ -92,7 +92,7 @@ public class OfflineCopy {
 			
 			//use FilePuputStream to write file
 			//FileWriter fw = new FileWriter(file.getAbsoluteFile());
-			bw = new FileOutputStream(file.getAbsoluteFile());
+			bw = new FileOutputStream(file);
 			
 			//write today's date to the start of the file
 			DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
