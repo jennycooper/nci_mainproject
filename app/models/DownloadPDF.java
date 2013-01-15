@@ -51,13 +51,13 @@ public class DownloadPDF {
     	res.getCosts().addTotals(res);
     	
     	//create a new directory (if it doens't already exist) to store the pdf copies
-		File dir = new File("/euaiki_offline_calendar");
+		File dir = new File("/euaiki_offline_copy");
 		if (!dir.exists()) {
 			dir.mkdir();
 		}
 
 		/** Path to the resulting PDF file. */
-	    String filePath = "/euaiki_offline_calendar/"+res.getMyGuest().getName()+".pdf";
+	    String filePath = "/euaiki_offline_copy/"+res.getMyGuest().getName()+".pdf";
 	    //create a new Document and convert it to a pdf instance
         
         try {

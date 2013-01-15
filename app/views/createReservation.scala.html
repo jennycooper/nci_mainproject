@@ -2,6 +2,11 @@
 
 @import helper._
 
+@convertDate()=@{
+	var date:String = reservationForm("checkin").value();
+	routes.Calendars.GO_HOME(date)
+}
+
 
 <!--calling the template main, and passing in a String parameter, which is then used inside the main.html page-->
 @main("Euaiki Island Reservations") {
@@ -18,7 +23,14 @@
 		    </ul>
     		<h2>Create Reservation Details</h2>
     	</div>
-
+		
+		@if(flash.containsKey("failure")) {
+			<div class="alertMsg">
+				<img class="flash_icon" src="@routes.Assets.at("images/warning.png")"/>
+		        <strong>Warning!</strong> @flash.get("failure")
+		    </div>
+		}
+		    
 		<div class = "rooms">
 			<h3>No. of Rooms: </h3>
 		 	@form(routes.Application.addRooms("")){
@@ -47,6 +59,7 @@
 				    <fieldset class="box">
 				    	<legend>Reservation Details</legend>
 				    	<ol>
+				    		<p>Dates must be as YYYY-MM-DD</p>
 				    		<li>@inputText(reservationForm("checkin"), '_label -> "Check-In Date:")</li>
 				        	<li>@inputText(reservationForm("checkout"), '_label -> "Check-Out Date:")</li>
 					        <li>@inputText(reservationForm("numAdults"), '_label -> "No. of Adults:", '_default -> "0.0")</li>
@@ -101,6 +114,5 @@
 
 
      </div>   
-    
-    
 }
+    

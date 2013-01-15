@@ -63,23 +63,36 @@ public class Application extends Controller {
 		
 	    Form<Reserve> reservationForm = form(Reserve.class).bindFromRequest();
 	    if(reservationForm.hasErrors()) {
+	    	flash("failure", "errors on form or empty fields");
 	        return badRequest(views.html.reservation.render(id, reservationForm, Reserve.find.byId(id).getDetailList().size()));
 	    }
 	
 	    Reserve res = reservationForm.get();
+	    
+	    //check that checkout date is not before checkin date
+	    if(res.getCheckout().getTime()<=res.getCheckin().getTime()){
+	    	flash("failure", "Check-out date is before check-in date!");
+			return badRequest(views.html.reservation.render(id, reservationForm, Reserve.find.byId(id).getDetailList().size()));
+	    }
+	    
 	    //check if the change of dates is trying to overwrite an existing reservation (using a method in the MonthlyBookings class)
 		MonthlyBookings mbook = new MonthlyBookings(res.getCheckin());
-		
-		if(mbook.alreadyExists(res.getCheckin(), res.getCheckout(), res.getReservationID(), res.getDetailList())==true){
+		if(mbook.alreadyExists(res.getCheckin(), res.getCheckout(), res.getReservationID(), res.getDetailList())){
 			flash("failure", "Those dates are already reserved!");
 			return badRequest(views.html.reservation.render(id, reservationForm, Reserve.find.byId(id).getDetailList().size()));
-		   }
-		else 
-			//update the reservation, and update and download the pdf invoice
-			res.updateReservation(id);
-			DownloadPDF.createPDF(res);
-		    flash("success", "Reservation for " + res.getMyGuest().getName() + " has been updated");
-		    return ok(views.html.viewReservation.render(id, reservationForm.fill(res), res.getDetailList().size()));	
+		}
+		
+		//check user has correct role
+		if (!AuthorisedRole.checkRole(ctx())){
+			System.out.println(AuthorisedRole.checkRole(ctx()));
+			return ok("you do not have user rights to edit this reservation");
+		}
+		//update the reservation, and update and download the pdf invoice
+		res.updateReservation(id);
+		DownloadPDF.createPDF(res);
+		flash("success", "Reservation for " + res.getMyGuest().getName() + " has been updated");
+		return ok(views.html.viewReservation.render(id, reservationForm.fill(res), res.getDetailList().size()));
+			
 	}
 
 
@@ -102,9 +115,9 @@ public class Application extends Controller {
 		if(reservationForm.hasErrors()) {
 	        return badRequest(views.html.createReservation.render(reservationForm,1));
 	    }
-	
 		return ok(views.html.createReservation.render(reservationForm,Integer.parseInt(rooms)));	
 	}	
+	
 
 	/**
 	* Handle the 'new reservation form' submission
@@ -112,21 +125,31 @@ public class Application extends Controller {
 	public static Result save() {
 		Form<Reserve> reservationForm = form(Reserve.class).bindFromRequest();
 		if(reservationForm.hasErrors()) {
+			flash("failure", "errors on form or empty fields");
 	        return badRequest(views.html.createReservation.render(reservationForm,1));
 	    }
+		
 		Reserve r = reservationForm.get();
+		
+		//check that checkout date is not before checkin date
+	    if(r.getCheckout().getTime()<=r.getCheckin().getTime()){
+	    	flash("failure", "Check-out date is before check-in date!");
+	    	return badRequest(views.html.createReservation.render(reservationForm,1));
+	    }
+	    
 		//check if date is already booked, by calling a method in the MonthlyBookings class
 		MonthlyBookings mb = new MonthlyBookings(r.getCheckin());
 		if(mb.alreadyExists(r.getCheckin(), r.getCheckout(), r.getReservationID(), r.getDetailList())){
+			flash("failure", "Those dates are already booked for that room!");
 	        return badRequest(views.html.createReservation.render(reservationForm,1));
 	    }
-		else{	
-			//else save the reservation to the database and download the invoice
-			r.save(); 
-			Download.downloadPDF(r.getReservationID());
-			flash("success", "New reservation has been created");
-			return Calendars.GO_HOME(reservationForm.get().getCheckin());
-		}
+			
+		//else save the reservation to the database and download the invoice
+		r.save(); 
+		Download.downloadPDF(r.getReservationID());
+		flash("success", "New reservation has been created");
+		return Calendars.GO_HOME(reservationForm.get().getCheckin());
+		
 	}
 
 	/**

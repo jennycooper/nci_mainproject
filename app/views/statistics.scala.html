@@ -13,10 +13,23 @@
 		    <div class="menu">
 			    <ul>
 			    	<li class="cal_buttons">
-			        	<a href="@routes.Calendars.index("")">Home</a>
+			        	<a href="@routes.Calendars.index("")">Return To Reservation Calendar</a>
 			    	</li>
-			    	<li class="cal_buttons">
-			        	<a href="#">Logout</a>
+			    	<li>
+			    		<form action="@routes.Stats.viewStats("") method="GET">
+					    		<select name="y">
+					       			<option value="2010">2010</option>
+					       			<option value="2011">2011</option>
+					       			<option value="2012">2012</option>
+					       			<option value="2013">2013</option>
+					       			<option value="2014">2014</option>
+					       			<option value="2015">2015</option>
+					       		</select>
+					    		<input type="submit" value="View Statistics For a Different Year" class="cal_buttons" ></input>
+						</form>
+					</li>
+			    	<li class="cal_buttons" style="float:right">
+			        	<a href="@routes.Authenticate.logout()">Logout</a>
 			    	</li>
 				</ul>
 			</div>

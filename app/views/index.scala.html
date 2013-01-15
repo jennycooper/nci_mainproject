@@ -75,10 +75,15 @@
 				        	<a href="@routes.Authenticate.logout()">Logout</a>
 				    	</li>
 					</ul>
-				</div>
-				
+					<img class="legend" src="@routes.Assets.at("images/legend.png")"/>
+				</div> 	
 			</div>
-			
+			@if(flash.containsKey("success")) {
+			        <div class="alertMsg">
+			        <img class="flash_icon" src="@routes.Assets.at("images/hibiscus.png")"/>
+			            <strong>Reservation Created!</strong> @flash.get("success")
+			        </div>
+			}
 		    <div id='Tabs'>
 		    	<ul>
 		    		<li id='year'>@myYear</li>

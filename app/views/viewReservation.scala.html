@@ -23,6 +23,7 @@
 	    
 	    @if(flash.containsKey("success")) {
         <div class="alertMsg">
+        <img class="flash_icon" src="@routes.Assets.at("images/hibiscus.png")"/>
             <strong>Done!</strong> @flash.get("success")
         </div>
     	} 

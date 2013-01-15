@@ -7,19 +7,9 @@
 	routes.Calendars.GO_HOME(date)
 }
 
+<!--calling the template main, and passing in a String parameter, which is then used inside the main.html page-->
+@main("Euaiki Island Reservations") {
 
-<!DOCTYPE html>
-
-<html>
-    <head>
-        <title>Euaiki Island Reservations</title>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/hibiscus.png")">
-        <script src="@routes.Assets.at("javascripts/javascript.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.at("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
-        
-    </head>
-    <body>
     	<div class="container">
 		    <div class="formheader">
 		    	<ul>
@@ -32,13 +22,17 @@
 			    </ul>
 	    		<h2>Edit Reservation Details</h2>
 	    	</div>
-	    	
-		      @form(routes.Application.update(id), 'class -> "view") {
+	    	@if(flash.containsKey("failure")) {
+		        <div class="alertMsg">
+		        	<img class="flash_icon" src="@routes.Assets.at("images/warning.png")"/>
+		            <strong>Warning!</strong> @flash.get("failure")
+		        </div>
+		    }
+			@form(routes.Application.update(id), 'class -> "view") {
 		     	<div class = "edit">
 			     	<fieldset class="guest">
 				 		<legend>Guest Details</legend>
 					 	<ol >
-						
 							<li class = "hiddenField">
 							@input(reservationForm("reservationID")) { (id, name, value, _) =>
 				        		<input type="hidden" name="@name" value="@value"> 
@@ -62,6 +56,7 @@
 				    <fieldset class="box">
 			    	<legend>Reservation Details</legend>
 			    	<ol>
+			    		<p>Dates must be as YYYY-MM-DD</p>
 			    		<li>
 			    		@input(reservationForm("checkin"), '_label -> "Check In Date:") { (id, name, value, _) =>
 			        		<input type="text" name="@name" value="@value" > 
@@ -237,20 +232,7 @@
 		    		<button type="button"><a href="@routes.Application.delete(id)" >Delete Reservation</a></button>
 		    	}
 			 </div> 
-
-		    }
-
-
-		    
-		    
+		    }    
 		</div>
-    </body>
-    
-    <script>
-         @if(flash.containsKey("failure")) { 
-       		window.onload = errMsg("failure", "Some of those dates are already taken! \nPlease change the dates.");
-       		}
-
-	</script>
-</html>
+}
 
