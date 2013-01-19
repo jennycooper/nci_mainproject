@@ -225,12 +225,15 @@
 					  	</li>
 					</ol>
 				</fieldset>	
-				<button type="submit">Save Changes</button> 
-				<button type="button"><a href="@routes.Application.viewReservation(id)" >Cancel</a></button>
-				 <!--delete the form-->
+				<fieldset>
+				<button type="submit" class = "btn">Save Changes</button> 
+				<a href="@routes.Application.viewReservation(id)" class="btn">Cancel</a>
+				<!--delete the form-->
 		    	@if(session.get("role").equals("reservation")){ 
-		    		<button type="button"><a href="@routes.Application.delete(id)" >Delete Reservation</a></button>
+		    		<a href="@routes.Application.delete(id))" class="btn">Delete This Reservation</a>
 		    	}
+				</fieldset>
+		 
 			 </div> 
 		    }    
 		</div>

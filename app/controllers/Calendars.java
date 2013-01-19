@@ -6,6 +6,7 @@
  * @author Jenny Cooper, x12101303
  * 
  */
+
 package controllers;
 
 import java.text.ParseException;
@@ -56,6 +57,7 @@ public class Calendars extends Controller{
 	 * Redirect to index page.
 	 * @params args Date (to denote the year)
 	 */
+	@Security.Authenticated(AuthorisedRole.class)
 	public static Result GO_HOME(Date date) {
 		return redirect(routes.Calendars.index(DateConversion.convertDateToString(date)));
 	}
@@ -66,6 +68,7 @@ public class Calendars extends Controller{
 	 * create a yearly calendar and render it to the html view
 	 * @params args String (to denote the year)
 	 */
+
 	public static Result yearCalendar(String year){
 		YearlyBookings yb = new YearlyBookings(year);
 		return ok(views.html.offline.render(yb.getYearlyCalendar(), year) );
@@ -76,10 +79,10 @@ public class Calendars extends Controller{
 	 * handle the downloading of the yearly calendar to the user's local pc
 	 * @params args String (to denote the year)
 	 */
+
 	public static Result downloadCopy(String year){
 		//call a method to download an offline copy to the user's computer
 		OfflineCopy.downloadCopy(year);
-		
 		return ok(views.html.downloaded.render(year));
 	}
 	

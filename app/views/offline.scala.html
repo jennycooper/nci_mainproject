@@ -2,6 +2,41 @@
 
 @import helper._
 
+@import java.io._
+@import scala.io.Source
+
+@download()=@{
+	//method that makes a copy of this page and downloads it
+	val url  = new java.net.URL("https://damp-ravine-8097.herokuapp.com/download?year="+myYear);
+
+	try{
+		val conn = url.openConnection();
+		var br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	
+		val file = "/euaiki_offline_copy/calendar_" + myYear + ".html";
+		var fw = new java.io.FileWriter(file);
+		var bw = new BufferedWriter(fw);
+		//create a new directory (if it doesn't already exist) to store the offline copy
+		val dir = new File("/euaiki_offline_copy");
+		if (!dir.exists()) {
+				dir.mkdir();
+		}
+		var inputLine = ""
+		while ({inputLine = br.readLine(); inputLine != null}) {
+			bw.write(inputLine);				
+		}
+		br.close
+		bw.close
+		fw.close
+	}
+	catch {
+		case e: IOException => routes.Authenticate.logout();
+	}
+
+	routes.Calendars.downloadCopy(myYear);
+}
+
+
 <!DOCTYPE html>
 
 <html>
@@ -181,6 +216,7 @@
 			}
 			
 		</style>
+
     </head>
     
     <body>
@@ -191,7 +227,7 @@
 		    	<div class="menu">
 			    	<ul>
 				    	<li class="cal_buttons">
-				        	<a href="@routes.Calendars.downloadCopy(myYear)">Download Calendar</a>
+				        	<a href="@download()" >Download Calendar</a>
 				    	</li>
 				    	<li >
 					    	<form action="@routes.Calendars.yearCalendar(" ") method="GET">
@@ -264,3 +300,4 @@
 		</div>
     </body>
 </html>
+

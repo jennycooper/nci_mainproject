@@ -1,0 +1,57 @@
+@(guestName: String, byteArray: DownloadPDF, date: String)
+
+@import helper._
+@import java.io._
+@import scalax.io._
+@import scalax.file.Path
+@import scalax.file.FileOps
+
+
+
+@download()=@{
+//method that takes a byte array and writes it to a file (as a pdf)
+	try{	
+		//create a new directory (if it doesn't already exist) to store the offline copy
+		val dir = new File("/euaiki_offline_copy");
+		if (!dir.exists()) {
+				dir.mkdir();
+		}
+		
+	 	val filename:String = "/euaiki_offline_copy/"+guestName+"_invoice.pdf"
+	 	val file: File = new File(filename)
+	 	var out = new java.io.FileOutputStream(file)
+
+		out.write(byteArray.byteArrayPDF)
+		out.flush
+		out.close	
+	}
+	catch {
+		case e: IOException => routes.Authenticate.logout();
+	}
+	routes.Calendars.index(date);
+}
+
+
+
+<!--calling the template main, and passing in a String parameter, which is then used inside the main.html page-->
+@main("Euaiki Island Reservations") {
+    
+<div class="small_container">   
+	<div class="relative">	
+	<img class="centered" src="@routes.Assets.at("images/euaiki_dock.jpg")"/>
+		<div class="downloaded">
+			<p>Invoice for @guestName </p>  
+			<p>will be downloaded to folder:<p>
+			<p>C:/euaiki_island_reservations<p>
+			<li class="return_button">
+		        	<a href="@download()" >Download</a>
+		    </li>
+		    <li class="return_button">
+		        	<a href="@routes.Calendars.index(date)">Skip</a>
+		    </li>   
+		    <img class="icon" width="55px" src="@routes.Assets.at("images/flowers.png")"/>
+		</div>   
+    </div>
+</div>
+    
+}

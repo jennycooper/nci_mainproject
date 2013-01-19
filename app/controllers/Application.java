@@ -29,10 +29,8 @@ public class Application extends Controller {
 		Reserve r =  Reserve.find.byId(id);
 		r.calcValues();
 		r.getCosts().addTotals(r);
-		Form<Reserve> myForm = form(Reserve.class).fill(r);
-	
-		int len = myForm.get().getDetailList().size();
-		return ok(views.html.viewReservation.render(id, myForm, len));
+		Form<Reserve> form = form(Reserve.class).fill(r);
+		return ok(views.html.viewReservation.render(id, form, form.get().getDetailList().size()));
 	}
 	 
 	/**
@@ -46,11 +44,10 @@ public class Application extends Controller {
 		Reserve r =  Reserve.find.byId(id);
 		r.calcValues();
 		r.getCosts().addTotals(r);
-		Form<Reserve> myForm = form(Reserve.class).fill(r);
-		
-		int len = myForm.get().getDetailList().size();
+		Form<Reserve> form = form(Reserve.class).fill(r);
+
 		if (AuthorisedRole.checkRole(ctx()))
-			return ok(views.html.reservation.render(id, myForm, len));
+			return ok(views.html.reservation.render(id, form, form.get().getDetailList().size()));
 		else
 			return ok("you do not have user rights to edit this reservation");
 	}
@@ -59,6 +56,7 @@ public class Application extends Controller {
 	 * Handle the 'edit form' submission 
 	 * @params Long (id of the reservation to update)
 	 */
+	@Security.Authenticated(AuthorisedRole.class)
 	public static Result update(Long id) {
 		
 	    Form<Reserve> reservationForm = form(Reserve.class).bindFromRequest();
@@ -84,14 +82,12 @@ public class Application extends Controller {
 		
 		//check user has correct role
 		if (!AuthorisedRole.checkRole(ctx())){
-			System.out.println(AuthorisedRole.checkRole(ctx()));
 			return ok("you do not have user rights to edit this reservation");
 		}
+		
 		//update the reservation, and update and download the pdf invoice
 		res.updateReservation(id);
-		DownloadPDF.createPDF(res);
-		flash("success", "Reservation for " + res.getMyGuest().getName() + " has been updated");
-		return ok(views.html.viewReservation.render(id, reservationForm.fill(res), res.getDetailList().size()));
+		return Download.downloadPDF(id);
 			
 	}
 
@@ -99,6 +95,7 @@ public class Application extends Controller {
 	/**
 	 * Display the 'new reservation' form.
 	 */
+	@Security.Authenticated(AuthorisedRole.class)
 	public static Result create() {
 		Form<Reserve> resForm = form(Reserve.class);
 	    return ok(views.html.createReservation.render(resForm,1));
@@ -109,6 +106,7 @@ public class Application extends Controller {
 	 * handle the new reservation form, if more than one room is requested
 	 * @param String (to denote no of required rooms)
 	 */
+	@Security.Authenticated(AuthorisedRole.class)
 	public static Result addRooms(String rooms){
 		//takes in the number of rooms for the reservation, parses this value to an integer, and passes the value back to the html view
 		Form<Reserve> reservationForm = form(Reserve.class).bindFromRequest();
@@ -122,6 +120,7 @@ public class Application extends Controller {
 	/**
 	* Handle the 'new reservation form' submission
 	*/
+	@Security.Authenticated(AuthorisedRole.class)
 	public static Result save() {
 		Form<Reserve> reservationForm = form(Reserve.class).bindFromRequest();
 		if(reservationForm.hasErrors()) {
@@ -146,9 +145,7 @@ public class Application extends Controller {
 			
 		//else save the reservation to the database and download the invoice
 		r.save(); 
-		Download.downloadPDF(r.getReservationID());
-		flash("success", "New reservation has been created");
-		return Calendars.GO_HOME(reservationForm.get().getCheckin());
+		return Download.downloadPDF(r.getReservationID());
 		
 	}
 
@@ -156,6 +153,7 @@ public class Application extends Controller {
 	 * Handle the deletion of a reservation
 	 * @params Long (id of the resrevation to delete)
 	 */
+	@Security.Authenticated(AuthorisedRole.class)
 	public static Result delete(Long id) {
 		Long guestid = Reserve.find.byId(id).getMyGuest().guestID;
 		//store the date of the reservation before deleting it, to pass as a parameter on return

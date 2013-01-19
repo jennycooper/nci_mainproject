@@ -25,11 +25,11 @@ public class Download extends Controller{
 	public static Result downloadPDF(Long id){
 		Reserve res = Reserve.find.byId(id);
 		//download the pdf invoice to the user's local pc
-		DownloadPDF.createPDF(res);
+		DownloadPDF byteArray = new DownloadPDF(res);
 		
 		//convert checkin date to a string, so index page will be displayed for appropriate date
-		String queryDate = DateConversion.convertDateToString(res.getCheckin());
-		return redirect(routes.Calendars.index(queryDate));
+		String date = DateConversion.convertDateToString(res.getCheckin());
+		return ok(views.html.pdfdownloaded.render(res.getGuest().getName(), byteArray, date));
 	}
 
 }

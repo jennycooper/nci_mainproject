@@ -214,32 +214,29 @@
 				   	</li>
 				</ol>		 
 			</fieldset>	
-			<fieldset class="transfer" >
+			<fieldset class="notes" >
 				<legend>Other Information</legend>
 				<ol>
 				  	<li class="transferinput">	        	
 						@input(reservationForm("notes"), args= 'rows -> 5, 'cols -> 30) { (id, name, value, _) =>
-						    <textarea id="@id" name="@name" readonly="readonly">@value</textarea>
+						    <textarea id="@id" name="@name" readonly="readonly" >@value</textarea>
 						}
 				  	</li>
 				</ol>
-			</fieldset>		
-		}
-		@form(routes.Application.getReservation(id), 'class -> "view") {
-			<!--Make the Edit reservation button only available to the correct role-->
-			 @if(session.get("role").equals("reservation")){   
-		    	<button type="button"><a href="@routes.Application.getReservation(id)">Edit this reservation</a></button>
-	    	}
-	    	<!--Make the Download PDF button only available to the correct role-->
-			 @if(session.get("role").equals("staff")){   
-		    	<button type="button"><a href="@routes.Download.downloadPDF(id)" method = "GET">Download Invoice in PDF format</a></button>	
-	    	}
-			<button type="button"><a href="@routes.Calendars.index("")" >Cancel</a></button>
-					
-	    }
-	
-	    
 
+			</fieldset>		
+			<fieldset>
+			<!--Make the Edit reservation button only available to the correct role-->
+			@if(session.get("role").equals("reservation")){ 
+				<a href="@routes.Application.getReservation(id)" class="btn">Edit This Reservation</a>
+				}
+			<!--Make the Download PDF button only available to the correct role-->
+			 @if(session.get("role").equals("staff")){  
+			 	<a href="@routes.Download.downloadPDF(id)" class="btn">Download Invoice</a> 
+	    	}
+			<a href="@routes.Calendars.index("")" class="btn">Cancel</a>
+			</fieldset>
+		}
 
     </div>
 }

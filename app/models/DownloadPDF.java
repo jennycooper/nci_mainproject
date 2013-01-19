@@ -8,11 +8,12 @@ package models;
  * 
  */
 
-import java.io.File;
-import java.io.FileNotFoundException;
+
+import java.io.ByteArrayOutputStream;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
+
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -20,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
- 
-import com.itextpdf.text.BadElementException;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -31,67 +30,62 @@ import com.itextpdf.text.Phrase;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+
  
 
 public class DownloadPDF {
+	public byte[] byteArrayPDF= null;
+	
+	//constructor
+	public DownloadPDF(Reserve res){
+		this.byteArrayPDF = createPDF(res);
+	}
 
     /**
-     * Creates a PDF file: (NameOfGuest).pdf
-     * @param    args    reservation
+     * creates a pdf invoice, and returns it in the form of a byte array, which will be sent to the html view
+     * @param res (a reservation instance, so costs can be calculated)
+     * @return byte array
      */
-    public static void createPDF(Reserve res){
+    public byte[] createPDF(Reserve res){
     	//call methods to calculate the costs of the reservation
     	res.calcValues();
     	res.getCosts().addTotals(res);
     	
-    	Image logo = null;
     	Document document = new Document();
-    	//calculate room costs and add to reservation
-    	res.calcValues();
-    	res.getCosts().addTotals(res);
-    	
-    	//create a new directory (if it doens't already exist) to store the pdf copies
-		File dir = new File("/euaiki_offline_copy");
-		if (!dir.exists()) {
-			dir.mkdir();
-		}
+    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    	try {
+    		//create a pdf instance of the document, which writes to a byte output stream (baos)
+			PdfWriter.getInstance(document, baos);
+	    	document.open();
 
-		/** Path to the resulting PDF file. */
-	    String filePath = "/euaiki_offline_copy/"+res.getMyGuest().getName()+".pdf";
-	    //create a new Document and convert it to a pdf instance
-        
-        try {
-			PdfWriter.getInstance(document, new FileOutputStream(filePath));
-			document.open();
-			
-			//add the logo to the pdf
-			logo = Image.getInstance("C:/play-2.0.4/firstApp/public/images/banner.jpg");
-			logo.scaleAbsolute(200, 100);
-	        logo.setAbsolutePosition(350, 700);
-	        document.add(logo);
-	        // add paragraphs of details to the pdf
+	    	// add paragraphs of details to the pdf
 	        ArrayList<Paragraph> p = getDetails(res);
 	        for (int i=0;i<p.size();i++){
 	        	document.add(p.get(i));
 	        }
 	        //add a table of costs to the pdf
 	        document.add(getTable(res));
-	        
-		    } catch (BadElementException e) {
-				e.printStackTrace();
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
+
+    	} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	finally{
+        	
+        	try {
+        		document.close();
+				baos.close();
 			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
-        finally{
-        	document.close();
         }
+    	byte[] byteArray = baos.toByteArray();
+    	return byteArray;
+
     }
-    
+      
+
     /*
      * create a list of paragraphs, containing fields and values to be inserted in the pdf invoice
      */
@@ -168,6 +162,36 @@ public class DownloadPDF {
 		
     	return table;
     }
+    
+    
+    /**
+     * method that takes in a byte array and writes it to a file
+     * this method is used for testing purposes only, it is not used by the application
+     * a similar method is instead in the pdfdownloaded.html view
+     * @param byteArray
+     */
+     public void testDownload(byte[] byteArray){
+     	FileOutputStream out = null;
+     	try {
+     		String filePath = "/euaiki_offline_copy/testinvoice.txt";
+     		out = new FileOutputStream(filePath);
+     		out.write(byteArray);
+     	}
+     	catch ( IOException e) {
+ 		// TODO Auto-generated catch block
+ 		e.printStackTrace();
+     	}
+     	finally{
+     		try {
+ 				out.flush();
+ 				out.close();
+ 				} catch (IOException e) {
+ 					// TODO Auto-generated catch block
+ 					e.printStackTrace();
+ 				}
+     	}
+ 			
+     }
  
 
 }

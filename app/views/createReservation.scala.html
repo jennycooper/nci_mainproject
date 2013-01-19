@@ -104,14 +104,14 @@
 			        			@textarea(reservationForm("notes"), args = 'rows -> 3, 'cols -> 30)
 				  			</li>
 				  		</ol>
-				  	</fieldset>		
+				  	</fieldset>	
+				  	<fieldset>
+				  	<button type="submit" class="btn">Create Reservation</button>
+				  	<a href="@routes.Calendars.index("")" class="btn">Cancel</a>
+				  	</fieldset>	
 		        </div>
-
-		        <button type="submit">Create Reservation</button> 
-		        <button type="button"><a href="@routes.Calendars.index("")">Cancel</a></button>	            	            
+         	            
         	}
-    
-
 
      </div>   
 }

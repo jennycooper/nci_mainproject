@@ -186,7 +186,7 @@ public class MonthlyBookings extends Model {
 	  		calCheckin.setTime(checkin);
 			Calendar calCheckout = Calendar.getInstance();
 	  		calCheckout.setTime(checkout);
-	  		//if the checkout date is in the next month, get all reservations for the next month also
+	  		//if the reservation spans 2 months, get all reservations for the next month also
 	  		if (calCheckin.get(Calendar.MONTH)!=calCheckout.get(Calendar.MONTH)){
 	  			List<BookedRoom> existingList2 = createBookingList(checkout);
 	  			if (existingList2.isEmpty()==false)
